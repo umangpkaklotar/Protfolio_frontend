@@ -73,7 +73,7 @@ const Projects = () => {
     return projects;
   }, [activeFilter]);
 
-  // Handle interactive mouse spotlight
+  // Handle interactive mouse spotlight & subtle 3D tilt
   const handleMouseMove = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -81,6 +81,15 @@ const Projects = () => {
     const y = e.clientY - rect.top;
     card.style.setProperty('--mouse-x', `${x}px`);
     card.style.setProperty('--mouse-y', `${y}px`);
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotX = ((y - centerY) / centerY) * -3;
+    const rotY = ((x - centerX) / centerX) * 3;
+    card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+  };
+
+  const handleMouseLeave = (e) => {
+    e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
   };
 
   useLayoutEffect(() => {
@@ -371,6 +380,7 @@ const Projects = () => {
                 key={project.id}
                 className="project-card"
                 onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
                 style={{
                   top: `calc(12vh + ${index * 1.8}rem)`,
                 }}

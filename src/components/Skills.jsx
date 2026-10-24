@@ -34,8 +34,40 @@ const descMap = {
 };
 
 const SkillCard = ({ skillGroup, index }) => {
+  const cardRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotX = ((y - centerY) / centerY) * -5.5;
+    const rotY = ((x - centerX) / centerX) * 5.5;
+    card.style.transform = `perspective(850px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-4px)`;
+  };
+
+  const handleMouseLeave = () => {
+    if (cardRef.current) {
+      cardRef.current.style.transform = 'perspective(850px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+    }
+  };
+
   return (
-    <div className="ref-skill-card" style={{ opacity: 1 }}>
+    <div
+      ref={cardRef}
+      className="ref-skill-card"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        opacity: 1,
+        transition: 'transform 0.15s ease-out, border-color 0.25s ease, box-shadow 0.25s ease',
+      }}
+    >
       <span className="about-hud-corner about-hud-corner-tl" aria-hidden="true" />
       <span className="about-hud-corner about-hud-corner-tr" aria-hidden="true" />
       <span className="about-hud-corner about-hud-corner-bl" aria-hidden="true" />

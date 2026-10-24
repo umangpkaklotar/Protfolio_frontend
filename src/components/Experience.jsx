@@ -41,37 +41,52 @@ const Experience = () => {
 
   useLayoutEffect(() => {
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isReducedMotion) return;
+    if (isReducedMotion) return undefined;
 
-    let ctx = gsap.context(() => {
-      // Line animation
-      gsap.from('.timeline-line', {
-        scaleY: 0,
-        transformOrigin: 'top',
-        duration: 1.5,
-        ease: 'power3.inOut',
+    const ctx = gsap.context(() => {
+      // Header entrance animation
+      gsap.from('.timeline-header-anim', {
+        opacity: 0,
+        y: 26,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.timeline-container',
-          start: 'top 60%',
-        }
+          trigger: comp.current,
+          start: 'top 78%',
+        },
       });
 
-      // Item animations
+      // Smooth scrubbed progress line beam
+      gsap.to('.timeline-line-progress', {
+        scaleY: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.timeline-container',
+          start: 'top 75%',
+          end: 'bottom 65%',
+          scrub: 0.35,
+        },
+      });
+
+      // Alternating item entrances
       const items = gsap.utils.toArray('.timeline-item');
       items.forEach((item, i) => {
+        const isLeft = i % 2 === 0;
         gsap.from(item, {
-          y: 50,
+          x: isLeft ? -40 : 40,
+          y: 35,
           opacity: 0,
-          duration: 0.8,
+          duration: 0.85,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: item,
             start: 'top 85%',
-          }
+          },
         });
       });
-      
     }, comp);
+
     return () => ctx.revert();
   }, []);
 
@@ -79,17 +94,19 @@ const Experience = () => {
     <section id="experience" ref={comp} className="timeline-section">
       <div className="container">
         <div className="timeline-header">
-          <div className="timeline-eyebrow">
+          <div className="timeline-eyebrow timeline-header-anim">
             <span className="timeline-eyebrow-dot" />
             <span>04 // CAREER TRAJECTORY</span>
           </div>
-          <h2 className="timeline-title">
+          <h2 className="timeline-title timeline-header-anim">
             Experience &amp; <span className="timeline-title-accent">Education</span>
           </h2>
         </div>
         
         <div className="timeline-container">
-          <div className="timeline-line"></div>
+          <div className="timeline-line">
+            <div className="timeline-line-progress" />
+          </div>
           
           {timelineData.map((item, index) => (
             <div key={item.id} className="timeline-item">

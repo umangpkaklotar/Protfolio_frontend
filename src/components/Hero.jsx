@@ -60,26 +60,52 @@ const Hero = () => {
           stagger: 0.12,
         }, '-=0.4');
 
+      // Floating card gentle hover loop
+      gsap.to('.hero-floating-card', {
+        y: -10,
+        repeat: -1,
+        yoyo: true,
+        duration: 2.6,
+        ease: 'sine.inOut',
+      });
+
+      // Continuous 360° Orbit Rings Rotation
+      gsap.to('.hero-orbit-outer', {
+        rotate: 360,
+        repeat: -1,
+        duration: 40,
+        ease: 'linear',
+      });
+
+      gsap.to('.hero-orbit-inner', {
+        rotate: -360,
+        repeat: -1,
+        duration: 50,
+        ease: 'linear',
+      });
+
+      // Scroll Parallax Scrub
       gsap.to('.hero-portrait-frame', {
-        y: 22,
-        scale: 0.985,
+        y: 45,
+        scale: 0.97,
         ease: 'none',
         scrollTrigger: {
           trigger: heroRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: 0.7,
+          scrub: 0.8,
         },
       });
 
-      gsap.to('.hero-orbit', {
-        rotate: 7,
+      gsap.to('.hero-ambient-glow', {
+        y: 80,
+        x: -40,
         ease: 'none',
         scrollTrigger: {
           trigger: heroRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: 1,
+          scrub: 1.2,
         },
       });
     }, heroRef);

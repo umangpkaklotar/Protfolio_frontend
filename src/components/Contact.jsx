@@ -1,5 +1,6 @@
 import React, { useRef, useLayoutEffect, useState } from 'react';
 import { Mail, MapPin, Send, ArrowUpRight, Clock, CheckCircle2, Terminal, User, FileText, Sparkles } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { personalInfo } from '../data/portfolioData';
@@ -34,7 +35,8 @@ const Contact = () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
     const ctx = gsap.context(() => {
-      gsap.from('.contact-anim', {
+      // Header entrance
+      gsap.from('.contact-header-anim', {
         y: 28,
         opacity: 0,
         duration: 0.8,
@@ -43,6 +45,29 @@ const Contact = () => {
         scrollTrigger: {
           trigger: comp.current,
           start: 'top 75%',
+        },
+      });
+
+      // Split entrance for columns
+      gsap.from('.contact-info-col', {
+        x: -40,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: comp.current,
+          start: 'top 70%',
+        },
+      });
+
+      gsap.from('.contact-form-console', {
+        x: 40,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: comp.current,
+          start: 'top 70%',
         },
       });
     }, comp);
@@ -63,9 +88,15 @@ const Contact = () => {
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitted(true);
+      confetti({
+        particleCount: 90,
+        spread: 80,
+        origin: { y: 0.62 },
+        colors: ['#ff7628', '#f59e0b', '#f97316', '#ffffff', '#ef4444'],
+      });
       setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setSubmitted(false), 8000);
-    }, 450);
+    }, 400);
   };
 
   return (
@@ -75,16 +106,16 @@ const Contact = () => {
       <div className="container">
         {/* Header */}
         <div className="contact-header">
-          <div className="contact-eyebrow contact-anim">
+          <div className="contact-eyebrow contact-header-anim">
             <span className="contact-status-dot" />
             <span>05 // DIRECT TRANSMISSION</span>
           </div>
 
-          <h2 className="contact-title contact-anim">
+          <h2 className="contact-title contact-header-anim">
             Let&apos;s Build Something <span className="contact-title-accent">Great.</span>
           </h2>
 
-          <p className="contact-lead-text contact-anim">
+          <p className="contact-lead-text contact-header-anim">
             Have a project idea, a development opportunity, or an interesting collaboration in mind? Initialize transmission below.
           </p>
         </div>
@@ -92,7 +123,7 @@ const Contact = () => {
         {/* 2-Column Command Center */}
         <div className="contact-layout">
           {/* Left: Contact Channels & Meta */}
-          <div className="contact-info-col contact-anim">
+          <div className="contact-info-col">
             {/* Live Availability Status */}
             <div className="contact-status-card">
               <span className="contact-live-dot" />
