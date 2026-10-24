@@ -79,8 +79,13 @@ const Experience = () => {
     <section id="experience" ref={comp} className="timeline-section">
       <div className="container">
         <div className="timeline-header">
-          <span className="timeline-eyebrow">MY PATH & EXPERIENCE</span>
-          <h2 className="timeline-title">Experience & Education</h2>
+          <div className="timeline-eyebrow">
+            <span className="timeline-eyebrow-dot" />
+            <span>04 // CAREER TRAJECTORY</span>
+          </div>
+          <h2 className="timeline-title">
+            Experience &amp; <span className="timeline-title-accent">Education</span>
+          </h2>
         </div>
         
         <div className="timeline-container">
@@ -91,6 +96,11 @@ const Experience = () => {
               <div className="timeline-dot"></div>
               
               <div className="timeline-content">
+                <span className="about-hud-corner about-hud-corner-tl" aria-hidden="true" />
+                <span className="about-hud-corner about-hud-corner-tr" aria-hidden="true" />
+                <span className="about-hud-corner about-hud-corner-bl" aria-hidden="true" />
+                <span className="about-hud-corner about-hud-corner-br" aria-hidden="true" />
+
                 <div className="timeline-badges">
                   <span className={`timeline-badge-date ${item.badgeClass}`}>
                     {item.date}

@@ -7,12 +7,12 @@ import { Layout, Server, Brain, Database, Globe, Wrench, ArrowRight, Layers, Lay
 gsap.registerPlugin(ScrollTrigger);
 
 const iconMap = {
-  "Frontend Development": <LayoutTemplate size={48} color="rgba(94, 114, 228, 0.8)" strokeWidth={1} />,
-  "Backend Development": <Server size={48} color="rgba(94, 114, 228, 0.8)" strokeWidth={1} />,
-  "AI & Machine Learning": <Brain size={48} color="rgba(94, 114, 228, 0.8)" strokeWidth={1} />,
-  "Databases": <DatabaseZap size={48} color="rgba(94, 114, 228, 0.8)" strokeWidth={1} />,
-  "Web & E-commerce": <ShoppingBag size={48} color="rgba(94, 114, 228, 0.8)" strokeWidth={1} />,
-  "Tools & Development": <Terminal size={48} color="rgba(94, 114, 228, 0.8)" strokeWidth={1} />
+  "Frontend Development": <LayoutTemplate size={48} color="rgba(255, 138, 75, 0.75)" strokeWidth={1} />,
+  "Backend Development": <Server size={48} color="rgba(255, 138, 75, 0.75)" strokeWidth={1} />,
+  "AI & Machine Learning": <Brain size={48} color="rgba(255, 138, 75, 0.75)" strokeWidth={1} />,
+  "Databases": <DatabaseZap size={48} color="rgba(255, 138, 75, 0.75)" strokeWidth={1} />,
+  "Web & E-commerce": <ShoppingBag size={48} color="rgba(255, 138, 75, 0.75)" strokeWidth={1} />,
+  "Tools & Development": <Terminal size={48} color="rgba(255, 138, 75, 0.75)" strokeWidth={1} />
 };
 
 const shortIconMap = {
@@ -36,10 +36,15 @@ const descMap = {
 const SkillCard = ({ skillGroup, index }) => {
   return (
     <div className="ref-skill-card" style={{ opacity: 1 }}>
+      <span className="about-hud-corner about-hud-corner-tl" aria-hidden="true" />
+      <span className="about-hud-corner about-hud-corner-tr" aria-hidden="true" />
+      <span className="about-hud-corner about-hud-corner-bl" aria-hidden="true" />
+      <span className="about-hud-corner about-hud-corner-br" aria-hidden="true" />
+
       <div className="ref-card-header">
-        <span className="ref-card-num">{String(index + 1).padStart(2, '0')}</span>
+        <span className="ref-card-num">{String(index + 1).padStart(2, '0')} // SKILL</span>
         <div className="ref-card-icon-large">
-          {iconMap[skillGroup.category] || <LayoutTemplate size={48} color="rgba(94, 114, 228, 0.8)" strokeWidth={1} />}
+          {iconMap[skillGroup.category] || <LayoutTemplate size={48} color="rgba(255, 138, 75, 0.75)" strokeWidth={1} />}
         </div>
       </div>
       
@@ -61,7 +66,7 @@ const SkillCard = ({ skillGroup, index }) => {
       </div>
       
       <div className="ref-card-arrow">
-        <ArrowRight size={18} color="#fff" />
+        <ArrowRight size={16} />
       </div>
     </div>
   );
@@ -129,23 +134,23 @@ const Skills = () => {
       <div className="container" style={{ position: 'relative', zIndex: 10 }}>
         
         <div className="ref-explore-pointer">
-          <span>Explore My<br/><span style={{color: '#f97316'}}>●</span> Skills</span>
+          <span>Explore My<br/><span style={{ color: '#ff7628' }}>●</span> Skills</span>
           <svg width="40" height="40" viewBox="0 0 100 100" style={{ position: 'absolute', top: '100%', right: '50%', transform: 'rotate(20deg)' }}>
-            <path d="M10,10 Q50,90 90,90 M80,80 L90,90 L90,80" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="2" />
+            <path d="M10,10 Q50,90 90,90 M80,80 L90,90 L90,80" fill="none" stroke="rgba(255, 118, 40, 0.5)" strokeWidth="2" />
           </svg>
         </div>
 
         <div className="ref-skills-header">
           <div className="ref-eyebrow">
-            <span className="ref-line"></span> WHAT I KNOW & BUILD WITH <span className="ref-line"></span>
+            <span className="ref-line"></span> WHAT I KNOW &amp; BUILD WITH <span className="ref-line"></span>
           </div>
           
           <h2 className="ref-title">
-            My <span className="ref-title-glow">Tech</span> Stack
+            My <span className="ref-title-accent">Tech Stack</span>
           </h2>
           
           <p className="ref-subtitle">
-            Technologies I use to turn ideas into real, scalable and<br/>impactful digital experiences.
+            Technologies I use to turn ideas into real, scalable and impactful digital experiences.
           </p>
         </div>
         
