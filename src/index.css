@@ -3115,98 +3115,129 @@ section {
 }
 
 /* -------------------------------------------------------------
-   2. QR REGISTRATION PREVIEW STYLES
+   2. DOCUMENT AI RAG CHATBOT PREVIEW STYLES
    ------------------------------------------------------------- */
-.qr-preview-box {
-  width: 100%;
-  padding: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.4rem;
-}
-
-.qr-matrix-card {
+.rag-preview-box {
   position: relative;
-  width: 110px;
-  height: 110px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 12px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-}
-
-.qr-pattern {
   width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  gap: 4px;
-}
-
-.qr-block {
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 2px;
-}
-
-.qr-block.corner {
-  background: #ff7628;
-  box-shadow: 0 0 8px rgba(255, 118, 40, 0.6);
-}
-
-.qr-laser-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #10b981;
-  box-shadow: 0 0 12px #10b981, 0 0 20px rgba(16, 185, 129, 0.6);
-  animation: qrLaserScan 2.6s ease-in-out infinite alternate;
-}
-
-@keyframes qrLaserScan {
-  0% { top: 5%; }
-  100% { top: 92%; }
-}
-
-.qr-badge-info {
+  padding: 1.1rem 1.3rem;
   display: flex;
   flex-direction: column;
+  gap: 0.65rem;
+  background: radial-gradient(circle at 10% 10%, rgba(255, 118, 40, 0.06) 0%, rgba(14, 12, 14, 0.92) 100%);
+  border-radius: 12px;
+}
+
+.rag-preview-top-tags {
+  display: flex;
+  align-items: center;
   gap: 0.45rem;
 }
 
-.qr-badge-title {
-  font-family: monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-.qr-badge-pass {
+.rag-tag-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 6px;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #34d399;
+  padding: 0.2rem 0.55rem;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #a49f99;
   font-family: monospace;
-  font-size: 0.64rem;
-  font-weight: 600;
+  font-size: 0.62rem;
 }
 
-.qr-badge-meta {
-  font-size: 0.68rem;
-  color: #9c958f;
-  line-height: 1.4;
+.rag-tag-pill.active {
+  background: rgba(255, 118, 40, 0.12);
+  border-color: rgba(255, 118, 40, 0.35);
+  color: #ff9d63;
+}
+
+.rag-preview-query-box {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.75rem;
+  background: rgba(255, 118, 40, 0.08);
+  border: 1px solid rgba(255, 118, 40, 0.22);
+  border-radius: 7px;
+}
+
+.rag-query-label {
+  font-family: monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #ff8a4b;
+}
+
+.rag-query-text {
+  font-size: 0.74rem;
+  color: #f7f5f2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rag-preview-stream-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.65rem 0.85rem;
+  background: rgba(22, 18, 20, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9px;
+}
+
+.rag-stream-ai-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: #ff8a4b;
+  font-weight: 650;
+}
+
+.rag-stream-text {
+  font-size: 0.76rem;
+  color: #cfc9c2;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.rag-cursor-dot {
+  display: inline-block;
+  width: 5px;
+  height: 11px;
+  background: #ff7628;
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: ragBlink 0.9s infinite;
+}
+
+@keyframes ragBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.rag-preview-sources {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+}
+
+.rag-source-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  color: #34d399;
+  font-family: monospace;
+  font-size: 0.62rem;
 }
 
 /* -------------------------------------------------------------

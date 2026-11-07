@@ -44,9 +44,13 @@ export const education = [
   }
 ];
 
-export const PCB_APP_URL = 
-  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_PCB_APP_URL) 
+export const PCB_APP_URL =
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_PCB_APP_URL)
   || 'https://pcb-frontend.getvoroa.com/';
+
+export const RAG_APP_URL = 
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_RAG_APP_URL) 
+  || 'https://rag-frontend-omega-three.vercel.app/';
 
 export const projects = [
   {
@@ -61,12 +65,13 @@ export const projects = [
   },
   {
     id: 4,
-    title: "QR Registration System",
-    category: "Web Application",
-    description: "A fast and reliable QR code based registration and check-in system for events and institutions.",
-    tech: ["React", "QR Codes", "Backend API"],
-    color: "#2f1b1b",
-    link: "#"
+    title: "Document AI",
+    category: "Full-Stack AI / Enterprise RAG",
+    description: "Production-grade Document Q&A Assistant powered by Gemini Embeddings, FAISS, Groq LLMs, and Clerk Auth with real-time streaming citations.",
+    tech: ["FastAPI", "React", "Groq AI", "Gemini API", "FAISS", "Clerk", "MongoDB"],
+    color: "#1e1428",
+    link: RAG_APP_URL,
+    hasCaseStudy: true,
   },
   {
     id: 5,

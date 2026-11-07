@@ -1,9 +1,10 @@
 import React, { useRef, useLayoutEffect, useState, useMemo, useEffect } from 'react';
-import { ArrowUpRight, Sparkles, FolderGit2, CheckCircle2, Mic, Cpu, Activity } from 'lucide-react';
+import { ArrowUpRight, Sparkles, FolderGit2, CheckCircle2, Mic, Cpu, Activity, FileText, Bot } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { projects } from '../data/portfolioData';
 import PcbCaseStudyModal from './PcbCaseStudyModal';
+import RagCaseStudyModal from './RagCaseStudyModal';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,10 +17,10 @@ const PROJECT_HIGHLIGHTS = {
     systemBadge: 'STATUS: ACTIVE',
   },
   4: {
-    metrics: ['<100ms Check-in', 'Zero Duplication', 'AES-256 Auth'],
-    statusDot: 'green',
-    systemLabel: 'AUTH GATEWAY // SECURE',
-    systemBadge: 'ENCRYPTED',
+    metrics: ['<1s Time-to-Token', 'Gemini Embedding-2', 'FAISS Top-K'],
+    statusDot: 'orange',
+    systemLabel: 'ENTERPRISE RAG // GROQ LPU + FAISS',
+    systemBadge: 'SSE STREAMING',
   },
   5: {
     metrics: ['96.8% Accuracy', 'Indic Regional Model', 'Acoustic NLP'],
@@ -46,13 +47,17 @@ const Projects = () => {
   const containerRef = useRef(null);
   const [activeFilter, setActiveFilter] = useState('ALL');
   const [isPcbModalOpen, setIsPcbModalOpen] = useState(false);
+  const [isRagModalOpen, setIsRagModalOpen] = useState(false);
 
-  // Sync hash routing so #pcb-defect-detection opens modal directly and preserves navigation
+  // Sync hash routing so #pcb-defect-detection or #document-ai opens modal directly and preserves navigation
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash;
       if (hash === '#pcb-defect-detection' || hash === '#pcb-case-study') {
         setIsPcbModalOpen(true);
+      }
+      if (hash === '#document-ai' || hash === '#rag-chatbot') {
+        setIsRagModalOpen(true);
       }
     };
 
@@ -71,6 +76,18 @@ const Projects = () => {
   const handleOpenPcbModal = () => {
     setIsPcbModalOpen(true);
     window.history.pushState(null, '', '#pcb-defect-detection');
+  };
+
+  const handleCloseRagModal = () => {
+    setIsRagModalOpen(false);
+    if (window.location.hash === '#document-ai' || window.location.hash === '#rag-chatbot') {
+      window.history.replaceState(null, '', '#projects');
+    }
+  };
+
+  const handleOpenRagModal = () => {
+    setIsRagModalOpen(true);
+    window.history.pushState(null, '', '#document-ai');
   };
 
   // Filter categories with dynamic counts
@@ -246,45 +263,42 @@ const Projects = () => {
             </div>
           )}
 
-          {/* 2. QR Registration System Visual */}
+          {/* 2. Document AI RAG Chatbot Visual */}
           {project.id === 4 && (
-            <div className="qr-preview-box">
-              <div className="qr-matrix-card">
-                <div className="qr-pattern">
-                  <div className="qr-block corner" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block corner" />
-                  <div className="qr-block" />
-                  <div className="qr-block corner" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block corner" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block corner" />
-                  <div className="qr-block" />
-                  <div className="qr-block corner" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block" />
-                  <div className="qr-block corner" />
-                </div>
-                <div className="qr-laser-line" />
+            <div 
+              className="rag-preview-box pcb-preview-interactive"
+              onClick={handleOpenRagModal}
+              title="Click to inspect full Document AI RAG case study"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') handleOpenRagModal();
+              }}
+            >
+              <div className="rag-preview-top-tags">
+                <span className="rag-tag-pill active"><FileText size={11} /> Q3_Report.pdf (P.2)</span>
+                <span className="rag-tag-pill"><Sparkles size={11} /> Spec.docx</span>
               </div>
-              <div className="qr-badge-info">
-                <span className="qr-badge-title">VIP ACCESS PASS</span>
-                <span className="qr-badge-pass">
-                  <CheckCircle2 size={12} /> VERIFIED // GATE 02
-                </span>
-                <span className="qr-badge-meta">USER: #ATT-8941<br />SEAT: SECTION A-12</span>
+              <div className="rag-preview-query-box">
+                <span className="rag-query-label">QUERY:</span>
+                <span className="rag-query-text">&quot;Summarize revenue growth and key drivers&quot;</span>
+              </div>
+              <div className="rag-preview-stream-box">
+                <div className="rag-stream-ai-header">
+                  <Bot size={12} style={{ color: '#ff7628' }} />
+                  <span>GROQ LPU™ // qwen3.8-27b:</span>
+                </div>
+                <p className="rag-stream-text">
+                  According to Q3_Report.pdf (Page 2), enterprise revenue grew <strong>24.8%</strong> YoY driven by smart automation deployments...
+                  <span className="rag-cursor-dot" />
+                </p>
+                <div className="rag-preview-sources">
+                  <span className="rag-source-chip"><CheckCircle2 size={10} /> Q3_Report.pdf #P2</span>
+                  <span className="rag-source-chip">Cosine: 0.894</span>
+                </div>
+              </div>
+              <div className="pcb-interactive-hint">
+                <span>INSPECT CASE STUDY // CLICK</span>
               </div>
             </div>
           )}
@@ -461,10 +475,16 @@ const Projects = () => {
 
                   <div className="project-card-body">
                     <h3 
-                      className={`project-card-title ${project.id === 1 ? 'clickable-title' : ''}`}
-                      onClick={project.id === 1 ? handleOpenPcbModal : undefined}
-                      style={{ cursor: project.id === 1 ? 'pointer' : 'default' }}
-                      title={project.id === 1 ? 'Click to inspect full AI & Robotics case study' : undefined}
+                      className={`project-card-title ${(project.id === 1 || project.id === 4) ? 'clickable-title' : ''}`}
+                      onClick={() => {
+                        if (project.id === 1) handleOpenPcbModal();
+                        if (project.id === 4) handleOpenRagModal();
+                      }}
+                      style={{ cursor: (project.id === 1 || project.id === 4) ? 'pointer' : 'default' }}
+                      title={
+                        project.id === 1 ? 'Click to inspect full AI & Robotics case study' :
+                        project.id === 4 ? 'Click to inspect full Document AI RAG case study' : undefined
+                      }
                     >
                       {project.title}
                     </h3>
@@ -496,7 +516,16 @@ const Projects = () => {
                       href={project.link || '#'}
                       target={project.link && project.link !== '#' ? '_blank' : undefined}
                       rel="noopener noreferrer"
-                      title={project.id === 1 ? 'Open actual live PCB Defect Detection web application' : undefined}
+                      title={
+                        project.id === 1 ? 'Open actual live PCB Defect Detection web application' :
+                        project.id === 4 ? 'Open Document AI RAG Platform' : undefined
+                      }
+                      onClick={(e) => {
+                        if (project.id === 4 && (!project.link || project.link === '#')) {
+                          e.preventDefault();
+                          handleOpenRagModal();
+                        }
+                      }}
                     >
                       <span>Explore Project</span>
                       <ArrowUpRight size={16} />
@@ -508,6 +537,16 @@ const Projects = () => {
                         className="project-btn-secondary"
                         onClick={handleOpenPcbModal}
                         title="View comprehensive AI & Industrial Simulation Case Study"
+                      >
+                        <FolderGit2 size={15} />
+                        <span>Case Details</span>
+                      </button>
+                    ) : project.id === 4 ? (
+                      <button
+                        type="button"
+                        className="project-btn-secondary"
+                        onClick={handleOpenRagModal}
+                        title="View comprehensive Document AI RAG Case Study"
                       >
                         <FolderGit2 size={15} />
                         <span>Case Details</span>
@@ -538,6 +577,12 @@ const Projects = () => {
       <PcbCaseStudyModal 
         isOpen={isPcbModalOpen} 
         onClose={handleClosePcbModal} 
+      />
+
+      {/* Enterprise Document AI RAG Case Study Modal */}
+      <RagCaseStudyModal 
+        isOpen={isRagModalOpen} 
+        onClose={handleCloseRagModal} 
       />
     </section>
   );
