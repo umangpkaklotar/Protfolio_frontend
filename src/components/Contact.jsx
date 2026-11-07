@@ -185,7 +185,7 @@ const Contact = () => {
                 </span>
                 <div className="contact-channel-meta">
                   <span className="contact-channel-label">Professional Network</span>
-                  <span className="contact-channel-value">linkedin.com/in/umang</span>
+                  <span className="contact-channel-value">linkedin.com/in/umang-kaklotar-802099303</span>
                 </div>
               </div>
               <ArrowUpRight size={18} className="contact-channel-arrow" />

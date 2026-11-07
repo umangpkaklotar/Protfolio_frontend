@@ -8,9 +8,9 @@ export const personalInfo = {
   aboutHeading: "A Developer Who Loves Building.",
   aboutText: "I'm Umang P. Kaklotar, a developer interested in building modern websites, responsive interfaces, e-commerce experiences, and AI-powered applications. I enjoy exploring technologies, solving practical problems, and turning ideas into useful digital products.",
   contactHeading: "Let's Build Something Great.",
-  email: "your.email@example.com",
-  github: "https://github.com/yourusername",
-  linkedin: "https://linkedin.com/in/yourprofile",
+  email: "upkaklotar7@gmail.com",
+  github: "https://github.com/umangpkaklotar?tab=repositories",
+  linkedin: "https://www.linkedin.com/in/umang-kaklotar-802099303/",
   availability: "Available for Freelance",
   resume: "#"
 };
