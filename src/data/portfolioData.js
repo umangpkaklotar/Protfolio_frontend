@@ -44,15 +44,20 @@ export const education = [
   }
 ];
 
+export const PCB_APP_URL = 
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_PCB_APP_URL) 
+  || 'https://pcb-frontend.getvoroa.com/';
+
 export const projects = [
   {
     id: 1,
     title: "PCB Defect Detection",
-    category: "Machine Learning / Computer Vision",
-    description: "An automated system to detect defects in Printed Circuit Boards using computer vision and machine learning algorithms.",
-    tech: ["Python", "OpenCV", "Machine Learning"],
+    category: "Industrial AI / Computer Vision / Robotics",
+    description: "AI-powered PCB defect inspection system using YOLOv8 to detect 7 PCB defect types with real-time camera/mobile inspection, FastAPI backend, MongoDB tracking, and ROS 2 + Gazebo industrial simulation.",
+    tech: ["YOLOv8", "OpenCV", "ROS 2", "Gazebo", "FastAPI", "MongoDB", "React"],
     color: "#1a1a2e",
-    link: "#"
+    link: PCB_APP_URL,
+    hasCaseStudy: true,
   },
   {
     id: 4,

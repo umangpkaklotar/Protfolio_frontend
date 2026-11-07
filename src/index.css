@@ -2875,9 +2875,12 @@ section {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #d1ccc6;
+  font-family: inherit;
   font-size: 0.8rem;
   font-weight: 550;
   text-decoration: none;
+  cursor: pointer;
+  line-height: inherit;
   transition: all 0.22s ease;
 }
 
@@ -3069,6 +3072,46 @@ section {
   background: rgba(239, 68, 68, 0.65);
   padding: 0.1rem 0.35rem;
   border-radius: 3px;
+}
+
+.pcb-preview-interactive {
+  cursor: pointer;
+}
+
+.pcb-preview-interactive:focus-visible {
+  outline: 2px solid #ff7628;
+  outline-offset: 4px;
+}
+
+.pcb-interactive-hint {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  font-family: monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: #ff8a4b;
+  background: rgba(18, 14, 12, 0.88);
+  border: 1px solid rgba(255, 118, 40, 0.35);
+  padding: 0.2rem 0.55rem;
+  border-radius: 5px;
+  pointer-events: none;
+  opacity: 0.85;
+  transition: all 0.22s ease;
+  z-index: 6;
+}
+
+.pcb-preview-interactive:hover .pcb-interactive-hint {
+  opacity: 1;
+  background: rgba(255, 118, 40, 0.18);
+  border-color: #ff7628;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(255, 118, 40, 0.3);
+}
+
+.project-card-title.clickable-title:hover {
+  color: #ff8a4b !important;
+  text-shadow: 0 0 20px rgba(255, 118, 40, 0.4);
 }
 
 /* -------------------------------------------------------------
@@ -4056,7 +4099,7 @@ html.lenis body {
   background-color: #ff7628;
   box-shadow: 0 0 10px rgba(255, 118, 40, 0.9);
   pointer-events: none;
-  z-index: 99999;
+  z-index: 10000001;
   transform: translate(-50%, -50%);
   will-change: transform;
 }
@@ -4070,7 +4113,7 @@ html.lenis body {
   border-radius: 50%;
   border: 1.5px solid rgba(255, 118, 40, 0.45);
   pointer-events: none;
-  z-index: 99998;
+  z-index: 10000000;
   transform: translate(-50%, -50%);
   will-change: transform, width, height, border-color, background-color;
   transition: opacity 0.2s ease;

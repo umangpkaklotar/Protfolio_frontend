@@ -1,18 +1,19 @@
-import React, { useRef, useLayoutEffect, useState, useMemo } from 'react';
-import { ArrowUpRight, Sparkles, FolderGit2, CheckCircle2, Mic, Code2, Cpu, Activity } from 'lucide-react';
+import React, { useRef, useLayoutEffect, useState, useMemo, useEffect } from 'react';
+import { ArrowUpRight, Sparkles, FolderGit2, CheckCircle2, Mic, Cpu, Activity } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { projects } from '../data/portfolioData';
+import PcbCaseStudyModal from './PcbCaseStudyModal';
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Project-specific metrics & highlights
 const PROJECT_HIGHLIGHTS = {
   1: {
-    metrics: ['98.4% Precision', '60 FPS Real-time', 'YOLO / OpenCV'],
-    statusDot: 'red',
-    systemLabel: 'LIVE CV SCANNER // CAM_01',
-    systemBadge: 'PASS // 1 ALERT',
+    metrics: ['7 Defect Classes', 'YOLOv8 + OpenCV', 'ROS 2 + Gazebo'],
+    statusDot: 'orange',
+    systemLabel: 'INDUSTRIAL AOI // ROS 2 + YOLOv8',
+    systemBadge: 'STATUS: ACTIVE',
   },
   4: {
     metrics: ['<100ms Check-in', 'Zero Duplication', 'AES-256 Auth'],
@@ -44,13 +45,58 @@ const Projects = () => {
   const comp = useRef(null);
   const containerRef = useRef(null);
   const [activeFilter, setActiveFilter] = useState('ALL');
+  const [isPcbModalOpen, setIsPcbModalOpen] = useState(false);
 
-  // Filter categories
+  // Sync hash routing so #pcb-defect-detection opens modal directly and preserves navigation
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash === '#pcb-defect-detection' || hash === '#pcb-case-study') {
+        setIsPcbModalOpen(true);
+      }
+    };
+
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
+  const handleClosePcbModal = () => {
+    setIsPcbModalOpen(false);
+    if (window.location.hash === '#pcb-defect-detection' || window.location.hash === '#pcb-case-study') {
+      window.history.replaceState(null, '', '#projects');
+    }
+  };
+
+  const handleOpenPcbModal = () => {
+    setIsPcbModalOpen(true);
+    window.history.pushState(null, '', '#pcb-defect-detection');
+  };
+
+  // Filter categories with dynamic counts
   const categories = useMemo(() => [
     { key: 'ALL', label: 'All Works', count: projects.length },
-    { key: 'AI_ML', label: 'AI & Machine Learning', count: 3 },
-    { key: 'WEB', label: 'Web Applications', count: 1 },
-    { key: 'CV_NLP', label: 'CV & NLP', count: 2 },
+    { 
+      key: 'AI_ML', 
+      label: 'AI & Machine Learning', 
+      count: projects.filter(p => 
+        p.category.toLowerCase().includes('machine learning') || 
+        p.category.toLowerCase().includes('ai')
+      ).length 
+    },
+    { 
+      key: 'WEB', 
+      label: 'Web Applications', 
+      count: projects.filter(p => p.category.toLowerCase().includes('web')).length 
+    },
+    { 
+      key: 'CV_NLP', 
+      label: 'CV & NLP', 
+      count: projects.filter(p => 
+        p.category.toLowerCase().includes('vision') || 
+        p.category.toLowerCase().includes('nlp')
+      ).length 
+    },
   ], []);
 
   const filteredProjects = useMemo(() => {
@@ -167,7 +213,16 @@ const Projects = () => {
 
           {/* 1. PCB Defect Detection Visual */}
           {project.id === 1 && (
-            <div className="pcb-preview-box">
+            <div 
+              className="pcb-preview-box pcb-preview-interactive"
+              onClick={handleOpenPcbModal}
+              title="Click to inspect full AI & Robotics case study"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') handleOpenPcbModal();
+              }}
+            >
               <svg className="pcb-circuit-svg" viewBox="0 0 320 180" fill="none">
                 <path d="M 20 40 H 80 V 100 H 140 V 60 H 220 V 130 H 300" stroke="#ff7628" strokeWidth="1.5" strokeOpacity="0.3" strokeDasharray="4 4" />
                 <path d="M 40 160 V 110 H 110 V 150 H 200 V 80 H 290" stroke="#3b82f6" strokeWidth="1.5" strokeOpacity="0.25" />
@@ -182,8 +237,11 @@ const Projects = () => {
               </svg>
               <div className="pcb-scan-laser" />
               <div className="pcb-defect-bbox">
-                <span className="bbox-tag">ALERT: SHORT_CIRCUIT</span>
-                <span className="bbox-conf">98.4% CONF</span>
+                <span className="bbox-tag">ALERT: MISSING_HOLE</span>
+                <span className="bbox-conf">77.2% CONF</span>
+              </div>
+              <div className="pcb-interactive-hint">
+                <span>INSPECT CASE STUDY // CLICK</span>
               </div>
             </div>
           )}
@@ -402,7 +460,14 @@ const Projects = () => {
                   </div>
 
                   <div className="project-card-body">
-                    <h3 className="project-card-title">{project.title}</h3>
+                    <h3 
+                      className={`project-card-title ${project.id === 1 ? 'clickable-title' : ''}`}
+                      onClick={project.id === 1 ? handleOpenPcbModal : undefined}
+                      style={{ cursor: project.id === 1 ? 'pointer' : 'default' }}
+                      title={project.id === 1 ? 'Click to inspect full AI & Robotics case study' : undefined}
+                    >
+                      {project.title}
+                    </h3>
                     {project.description && (
                       <p className="project-card-desc">{project.description}</p>
                     )}
@@ -430,19 +495,32 @@ const Projects = () => {
                       className="project-btn-primary"
                       href={project.link || '#'}
                       target={project.link && project.link !== '#' ? '_blank' : undefined}
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
+                      title={project.id === 1 ? 'Open actual live PCB Defect Detection web application' : undefined}
                     >
                       <span>Explore Project</span>
                       <ArrowUpRight size={16} />
                     </a>
 
-                    <a
-                      className="project-btn-secondary"
-                      href="#contact"
-                    >
-                      <FolderGit2 size={15} />
-                      <span>Case Details</span>
-                    </a>
+                    {project.id === 1 ? (
+                      <button
+                        type="button"
+                        className="project-btn-secondary"
+                        onClick={handleOpenPcbModal}
+                        title="View comprehensive AI & Industrial Simulation Case Study"
+                      >
+                        <FolderGit2 size={15} />
+                        <span>Case Details</span>
+                      </button>
+                    ) : (
+                      <a
+                        className="project-btn-secondary"
+                        href="#contact"
+                      >
+                        <FolderGit2 size={15} />
+                        <span>Case Details</span>
+                      </a>
+                    )}
                   </div>
                 </div>
 
@@ -455,6 +533,12 @@ const Projects = () => {
           })}
         </div>
       </div>
+
+      {/* Bespoke Industrial AI Case Study Modal */}
+      <PcbCaseStudyModal 
+        isOpen={isPcbModalOpen} 
+        onClose={handleClosePcbModal} 
+      />
     </section>
   );
 };
