@@ -12,7 +12,7 @@ export const personalInfo = {
   github: "https://github.com/umangpkaklotar?tab=repositories",
   linkedin: "https://www.linkedin.com/in/umang-kaklotar-802099303/",
   availability: "Available for Freelance",
-  resume: "#"
+  resume: "/resume.pdf"
 };
 
 export const skills = [
@@ -58,7 +58,7 @@ export const projects = [
     title: "PCB Defect Detection",
     category: "Industrial AI / Computer Vision / Robotics",
     description: "AI-powered PCB defect inspection system using YOLOv8 to detect 7 PCB defect types with real-time camera/mobile inspection, FastAPI backend, MongoDB tracking, and ROS 2 + Gazebo industrial simulation.",
-    tech: ["YOLOv8", "OpenCV", "ROS 2", "Gazebo", "FastAPI", "MongoDB", "React"],
+    tech: ["YOLOv8", "OpenCV", "ROS 2", "Gazebo", "RViz2", "FastAPI", "MongoDB", "React"],
     color: "#1a1a2e",
     link: PCB_APP_URL,
     hasCaseStudy: true,
@@ -72,15 +72,6 @@ export const projects = [
     color: "#1e1428",
     link: RAG_APP_URL,
     hasCaseStudy: true,
-  },
-  {
-    id: 5,
-    title: "Gujarati Speech Recognition",
-    category: "AI / NLP",
-    description: "A localized speech recognition model specifically trained to understand and transcribe the Gujarati language.",
-    tech: ["Python", "NLP", "Deep Learning"],
-    color: "#2d2b1a",
-    link: "#"
   },
   {
     id: 6,

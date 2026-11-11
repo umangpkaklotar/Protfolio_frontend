@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -19,28 +20,30 @@ function App() {
   const progressBarRef = useRef(null);
 
   useEffect(() => {
-    // 1. Initialize Lenis Smooth Scrolling
+    // 1. Honor user motion preference
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (isReducedMotion) {
       ScrollTrigger.refresh();
       return undefined;
     }
 
+    // 2. Initialize Lenis Smooth Scrolling with natural momentum physics
     const lenis = new Lenis({
-      duration: 1.25,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
+      lerp: 0.09, // Silky physics-based damping for natural momentum and zero input delay
       smoothWheel: true,
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 1.0, // Natural 1:1 wheel distance response
+      touchMultiplier: 1.0, // Natural 1:1 touch ratio
+      syncTouch: false, // Ensures mobile uses hardware-accelerated native momentum without lag
+      autoResize: true,
+      prevent: (node) => node.hasAttribute?.('data-lenis-prevent') || Boolean(node.closest?.('[data-lenis-prevent]')),
     });
 
     window.__lenis = lenis;
 
-    // Sync Lenis scroll events with ScrollTrigger
+    // 3. Synchronize Lenis scroll events with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
+    // 4. Drive Lenis updates via GSAP ticker for a single unified animation clock
     const updateTicker = (time) => {
       lenis.raf(time * 1000);
     };
@@ -48,46 +51,79 @@ function App() {
     gsap.ticker.add(updateTicker);
     gsap.ticker.lagSmoothing(0);
 
-    // 2. Global Scroll Progress Bar Animation
+    // 5. Global Scroll Progress Bar Animation
+    let progressTween;
     if (progressBarRef.current) {
-      gsap.to(progressBarRef.current, {
+      progressTween = gsap.to(progressBarRef.current, {
         scaleX: 1,
         ease: 'none',
         scrollTrigger: {
-          trigger: document.body,
+          trigger: document.documentElement,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.2,
+          scrub: true,
         },
       });
     }
 
-    // 3. Smooth Anchor Link Handler
+    // 6. Smooth Anchor Link Handler with Navbar Offset & Lenis Easing
     const handleAnchorClick = (e) => {
       const anchor = e.target.closest('a[href^="#"]');
       if (!anchor) return;
       const href = anchor.getAttribute('href');
-      if (href && href.length > 1) {
+      if (!href || href === '#') return;
+
+      // Do not hijack anchors inside modals or tab interfaces
+      if (anchor.closest('[data-lenis-prevent]')) return;
+
+      if (href === '#top' || href === '#home') {
+        e.preventDefault();
+        lenis.scrollTo(0, {
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+        return;
+      }
+
+      try {
         const targetElement = document.querySelector(href);
         if (targetElement) {
           e.preventDefault();
-          lenis.scrollTo(targetElement, { offset: -40, duration: 1.2 });
+          lenis.scrollTo(targetElement, {
+            offset: -76, // Accounts for sticky navbar header height
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          });
         }
+      } catch {
+        // Fallback for non-selector hrefs
       }
     };
 
     document.addEventListener('click', handleAnchorClick);
 
-    // Refresh triggers after initial render
-    setTimeout(() => {
+    // 7. Refresh triggers once layout and web fonts are settled
+    const refreshScroll = () => {
+      lenis.resize();
       ScrollTrigger.refresh();
-    }, 250);
+    };
+
+    requestAnimationFrame(refreshScroll);
+
+    if (document.fonts) {
+      document.fonts.ready.then(refreshScroll).catch(() => {});
+    }
+
+    window.addEventListener('load', refreshScroll);
 
     return () => {
       gsap.ticker.remove(updateTicker);
+      lenis.off('scroll', ScrollTrigger.update);
       lenis.destroy();
       window.__lenis = null;
       document.removeEventListener('click', handleAnchorClick);
+      window.removeEventListener('load', refreshScroll);
+      if (progressTween) progressTween.kill();
     };
   }, []);
 

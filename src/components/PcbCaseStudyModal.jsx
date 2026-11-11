@@ -24,12 +24,13 @@ import {
   AlertTriangle,
   Layers,
   Terminal,
-  FolderGit2,
   Copy,
   Check,
   ShieldCheck,
   Zap,
-  Sliders
+  Sliders,
+  Monitor,
+  Grid
 } from 'lucide-react';
 import { pcbCaseStudy, PCB_APP_URL } from '../data/pcbCaseStudyData';
 import './PcbCaseStudyModal.css';
@@ -52,11 +53,16 @@ const HIGHLIGHT_ICONS = {
   RefreshCw: RefreshCw,
   Eye: Eye,
   Sparkles: Sparkles,
+  Monitor: Monitor,
 };
 
 const PcbCaseStudyModal = ({ isOpen, onClose, initialTab = 'overview' }) => {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [selectedDefect, setSelectedDefect] = useState(pcbCaseStudy.defectClasses[6]); // Missing hole by default (authentic example)
+  const [selectedRvizPcb, setSelectedRvizPcb] = useState(pcbCaseStudy.rvizVisualization?.pcbList[0] || {});
+  const [selectedRvizState, setSelectedRvizState] = useState(pcbCaseStudy.rvizVisualization?.inspectionStates[2] || { state: 'INSPECTING', color: '#f59e0b' });
+  const [selectedConveyorState, setSelectedConveyorState] = useState('STOPPED');
+  const [activeCycleStep, setActiveCycleStep] = useState(3);
   const [copiedUrl, setCopiedUrl] = useState(false);
   const [iframeError, setIframeError] = useState(false);
   const modalRef = useRef(null);
@@ -208,10 +214,19 @@ const PcbCaseStudyModal = ({ isOpen, onClose, initialTab = 'overview' }) => {
 
           <button
             type="button"
+            className={`pcb-nav-tab ${activeTab === 'rviz' ? 'active' : ''}`}
+            onClick={() => setActiveTab('rviz')}
+          >
+            <span className="pcb-nav-tab-badge">04</span>
+            <span>RViz2 Real-Time Visualization</span>
+          </button>
+
+          <button
+            type="button"
             className={`pcb-nav-tab ${activeTab === 'platform' ? 'active' : ''}`}
             onClick={() => setActiveTab('platform')}
           >
-            <span className="pcb-nav-tab-badge">04</span>
+            <span className="pcb-nav-tab-badge">05</span>
             <span>Web & Mobile Camera</span>
           </button>
 
@@ -220,7 +235,7 @@ const PcbCaseStudyModal = ({ isOpen, onClose, initialTab = 'overview' }) => {
             className={`pcb-nav-tab ${activeTab === 'highlights' ? 'active' : ''}`}
             onClick={() => setActiveTab('highlights')}
           >
-            <span className="pcb-nav-tab-badge">05</span>
+            <span className="pcb-nav-tab-badge">06</span>
             <span>Specs & Roadmap</span>
           </button>
 
@@ -229,7 +244,7 @@ const PcbCaseStudyModal = ({ isOpen, onClose, initialTab = 'overview' }) => {
             className={`pcb-nav-tab ${activeTab === 'live' ? 'active' : ''}`}
             onClick={() => setActiveTab('live')}
           >
-            <span className="pcb-nav-tab-badge">06</span>
+            <span className="pcb-nav-tab-badge">07</span>
             <span>Live Web Application Portal</span>
           </button>
         </div>
@@ -407,11 +422,16 @@ const PcbCaseStudyModal = ({ isOpen, onClose, initialTab = 'overview' }) => {
                     <ArrowRight size={14} className="pcb-pipe-arrow" />
                     <div className="pcb-pipeline-step">
                       <span className="pcb-pipe-num">STEP 06</span>
-                      <span className="pcb-pipe-label">Inspection Done Signal</span>
+                      <span className="pcb-pipe-label">RViz2 Real-Time Monitoring</span>
                     </div>
                     <ArrowRight size={14} className="pcb-pipe-arrow" />
                     <div className="pcb-pipeline-step">
                       <span className="pcb-pipe-num">STEP 07</span>
+                      <span className="pcb-pipe-label">Inspection Done Signal</span>
+                    </div>
+                    <ArrowRight size={14} className="pcb-pipe-arrow" />
+                    <div className="pcb-pipeline-step">
+                      <span className="pcb-pipe-num">STEP 08</span>
                       <span className="pcb-pipe-label">Conveyor Advances Next</span>
                     </div>
                   </div>
@@ -471,17 +491,6 @@ const PcbCaseStudyModal = ({ isOpen, onClose, initialTab = 'overview' }) => {
                                           Detection & Signals
                                          /pcb/inspection_done`}</pre>
 
-              {/* Project Folder Structure */}
-              <div className="pcb-card-box">
-                <h4 className="pcb-card-title">
-                  <FolderGit2 size={18} style={{ color: '#ff7628' }} />
-                  Project Workspace Architecture
-                </h4>
-                <p className="pcb-card-desc">
-                  Clean modular separation between Frontend, FastAPI AI Backend, ROS 2 Workspace, Simulation Models, and Trained YOLO Weights:
-                </p>
-                <pre className="pcb-ascii-block" style={{ marginBottom: 0 }}>{pcbCaseStudy.folderStructure}</pre>
-              </div>
             </div>
           )}
 
@@ -829,36 +838,6 @@ const PcbCaseStudyModal = ({ isOpen, onClose, initialTab = 'overview' }) => {
                 </div>
               </div>
 
-              {/* ROS 2 Communication Topics Table */}
-              <div className="pcb-section-header">
-                <div className="pcb-section-title-wrap">
-                  <span className="pcb-section-num">03.3</span>
-                  <h4 className="pcb-section-title">ROS 2 Communication Bus Topics</h4>
-                </div>
-              </div>
-
-              <div className="pcb-topics-table-wrap">
-                <table className="pcb-topics-table">
-                  <thead>
-                    <tr>
-                      <th>Topic Name</th>
-                      <th>Message Type</th>
-                      <th>Update Rate</th>
-                      <th>Operational Responsibility</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {pcbCaseStudy.rosTopics.map((item, i) => (
-                      <tr key={i}>
-                        <td><span className="topic-code">{item.topic}</span></td>
-                        <td><span className="topic-type">{item.type}</span></td>
-                        <td style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: '#ff8a4b' }}>{item.rate}</td>
-                        <td style={{ fontSize: '0.8rem', lineHeight: 1.5 }}>{item.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
 
               {/* OpenCV & CvBridge Pipeline */}
               <div className="pcb-card-box">
@@ -880,11 +859,605 @@ self.detected_image_pub.publish(out_msg)`}
                   </code>
                 </div>
               </div>
+
+              {/* Callout to Real-Time RViz2 Visualization */}
+              <div className="pcb-card-box pcb-rviz-cta-card" style={{ marginTop: '1.5rem', background: 'linear-gradient(135deg, rgba(255, 118, 40, 0.1) 0%, rgba(16, 14, 13, 0.95) 100%)', borderColor: 'rgba(255, 118, 40, 0.4)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
+                      <Monitor size={18} style={{ color: '#ff7628' }} />
+                      <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#fff' }}>Real-Time RViz2 Inspection Visualization Layer</h4>
+                      <span style={{ background: 'rgba(255, 118, 40, 0.2)', color: '#ff9d63', fontSize: '0.68rem', fontFamily: 'monospace', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: '700' }}>TAB 04</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: '#c4bfb9', maxWidth: '680px', lineHeight: 1.5 }}>
+                      Integrated RViz2 with ROS 2 and Gazebo to visualize the PCB inspection pipeline in real time, including live camera streams, YOLO detection results, inspection states, and the 3D inspection environment.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className="pcb-btn-primary-sm"
+                    onClick={() => setActiveTab('rviz')}
+                    style={{ whiteSpace: 'nowrap' }}
+                  >
+                    <span>Launch RViz2 Console</span>
+                    <ArrowRight size={14} />
+                  </button>
+                </div>
+              </div>
             </div>
           )}
 
           {/* ===================================================================
-              TAB 04: WEB & MOBILE PLATFORM
+              TAB 04: REAL-TIME RVIZ2 INSPECTION VISUALIZATION
+              =================================================================== */}
+          {activeTab === 'rviz' && (
+            <div className="pcb-tab-pane">
+              {/* 1. Header Box with Title, Short Description, and Badges */}
+              <div className="pcb-rviz-header-banner">
+                <div className="pcb-rviz-header-top">
+                  <div className="pcb-rviz-title-badge">
+                    <Monitor size={15} style={{ color: '#ff7628' }} />
+                    <span>ROS 2 + GAZEBO REAL-TIME VISUALIZATION LAYER</span>
+                  </div>
+                  <div className="pcb-rviz-live-pulse">
+                    <span className="pcb-pulse-dot green" />
+                    <span>RVIZ2 ACTIVE // FIXED FRAME: world</span>
+                  </div>
+                </div>
+
+                <h3 className="pcb-rviz-main-title">
+                  Real-Time RViz2 Inspection Visualization
+                </h3>
+
+                <p className="pcb-rviz-short-desc">
+                  Integrated RViz2 with ROS 2 and Gazebo to visualize the PCB inspection pipeline in real time, including live camera streams, YOLO detection results, inspection states, and the 3D inspection environment.
+                </p>
+
+                {/* Technology Badges / Tags */}
+                <div className="pcb-rviz-tags-row">
+                  {pcbCaseStudy.rvizVisualization.techBadges.map((badge, idx) => (
+                    <span key={idx} className="pcb-rviz-tag-pill">
+                      {badge}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Architecture & Flow Dual Row */}
+                <div className="pcb-rviz-flows-grid">
+                  {/* Architecture Visualization: Gazebo → ROS 2 → YOLO → RViz2 */}
+                  <div className="pcb-rviz-flow-card">
+                    <span className="pcb-rviz-flow-label">TECHNICAL ARCHITECTURE</span>
+                    <div className="pcb-rviz-flow-pills">
+                      {pcbCaseStudy.rvizVisualization.architecture.map((node, i) => (
+                        <React.Fragment key={i}>
+                          <div className={`pcb-rviz-flow-node ${node === 'RViz2' ? 'active-target' : ''}`}>
+                            <span>{node}</span>
+                          </div>
+                          {i < pcbCaseStudy.rvizVisualization.architecture.length - 1 && (
+                            <ArrowRight size={13} className="pcb-rviz-flow-arrow" />
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Technical Flow: Camera → ROS 2 → YOLO → Detection Result → RViz2 */}
+                  <div className="pcb-rviz-flow-card">
+                    <span className="pcb-rviz-flow-label">TECHNICAL DATA FLOW</span>
+                    <div className="pcb-rviz-flow-pills">
+                      {pcbCaseStudy.rvizVisualization.technicalFlow.map((node, i) => (
+                        <React.Fragment key={i}>
+                          <div className={`pcb-rviz-flow-node ${node === 'RViz2' ? 'active-target' : ''}`}>
+                            <span>{node}</span>
+                          </div>
+                          {i < pcbCaseStudy.rvizVisualization.technicalFlow.length - 1 && (
+                            <ArrowRight size={13} className="pcb-rviz-flow-arrow" />
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. RViz2 Highlights Grid */}
+              <div className="pcb-section-header" style={{ marginTop: '1.8rem' }}>
+                <div className="pcb-section-title-wrap">
+                  <span className="pcb-section-num">04.1</span>
+                  <h4 className="pcb-section-title">RViz2 Highlights</h4>
+                </div>
+                <span className="pcb-section-badge">CORE CAPABILITIES</span>
+              </div>
+
+              <div className="pcb-rviz-highlights-grid">
+                {pcbCaseStudy.rvizVisualization.highlights.map((item, idx) => (
+                  <div key={idx} className="pcb-rviz-highlight-item">
+                    <div className="pcb-rviz-hl-dot" />
+                    <span className="pcb-rviz-hl-text">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* 3. Interactive RViz2 Industrial Workspace Console */}
+              <div className="pcb-section-header" style={{ marginTop: '2rem' }}>
+                <div className="pcb-section-title-wrap">
+                  <span className="pcb-section-num">04.2</span>
+                  <h4 className="pcb-section-title">Simulated RViz2 Industrial Inspection Console</h4>
+                </div>
+                <span className="pcb-section-badge">INTERACTIVE HUD</span>
+              </div>
+
+              <div className="pcb-rviz-window-mockup">
+                {/* RViz2 Window Title Bar */}
+                <div className="pcb-rviz-window-bar">
+                  <div className="pcb-rviz-bar-left">
+                    <span className="pcb-rviz-window-btn red" />
+                    <span className="pcb-rviz-window-btn yellow" />
+                    <span className="pcb-rviz-window-btn green" />
+                    <span className="pcb-rviz-window-title">
+                      rviz2 — pcb_inspection.rviz [ROS 2 Jazzy // Displays: Grid, RobotModel, TF, Image(x2)]
+                    </span>
+                  </div>
+                  <div className="pcb-rviz-bar-right">
+                    <span className="pcb-rviz-fps-tag">60.0 FPS</span>
+                    <span className="pcb-rviz-frame-tag">Target Frame: <strong>world</strong></span>
+                  </div>
+                </div>
+
+                {/* Top Console Controls: PCB Selector + Inspection State + Conveyor State */}
+                <div className="pcb-rviz-console-controls">
+                  {/* Capability 5: PCB Identification & Sequential Tracking */}
+                  <div className="pcb-rviz-control-group">
+                    <span className="pcb-rviz-ctrl-label">ACTIVE PCB IDENTIFIER:</span>
+                    <div className="pcb-rviz-pcb-buttons">
+                      {pcbCaseStudy.rvizVisualization.pcbList.map((pcb) => (
+                        <button
+                          key={pcb.id}
+                          type="button"
+                          className={`pcb-rviz-pcb-btn ${selectedRvizPcb.id === pcb.id ? 'active' : ''}`}
+                          onClick={() => setSelectedRvizPcb(pcb)}
+                        >
+                          <span>{pcb.id}</span>
+                          <span className={`pcb-pcb-mini-status ${pcb.status.toLowerCase()}`}>
+                            {pcb.status === 'PASS' ? '✓' : '!'}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Capability 4: Real-Time Inspection Status & Conveyor State */}
+                  <div className="pcb-rviz-control-group">
+                    <span className="pcb-rviz-ctrl-label">INSPECTION STATE:</span>
+                    <div className="pcb-rviz-state-chips">
+                      {pcbCaseStudy.rvizVisualization.inspectionStates.map((st) => (
+                        <button
+                          key={st.state}
+                          type="button"
+                          className={`pcb-rviz-state-chip ${selectedRvizState.state === st.state ? 'active' : ''}`}
+                          style={{
+                            '--state-color': st.color,
+                            borderColor: selectedRvizState.state === st.state ? st.color : 'rgba(255,255,255,0.08)'
+                          }}
+                          onClick={() => {
+                            setSelectedRvizState(st);
+                            if (st.state === 'INSPECTING' || st.state === 'DETECTED') {
+                              setSelectedConveyorState('STOPPED');
+                            } else if (st.state === 'DONE' || st.state === 'WAITING') {
+                              setSelectedConveyorState('RUNNING');
+                            }
+                          }}
+                        >
+                          <span className="pcb-state-dot" style={{ background: st.color }} />
+                          <span>{st.state}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pcb-rviz-control-group">
+                    <span className="pcb-rviz-ctrl-label">CONVEYOR STATE:</span>
+                    <div className="pcb-rviz-conveyor-toggle">
+                      <span
+                        className={`pcb-conveyor-pill ${selectedConveyorState === 'RUNNING' ? 'running' : 'stopped'}`}
+                        onClick={() => setSelectedConveyorState(prev => prev === 'RUNNING' ? 'STOPPED' : 'RUNNING')}
+                      >
+                        <span className={`pcb-pulse-dot ${selectedConveyorState === 'RUNNING' ? 'green' : ''}`} />
+                        <span>{selectedConveyorState}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Dual RViz2 Main Workspaces: 3D Viewport + Dual Image Feeds */}
+                <div className="pcb-rviz-dual-workspace">
+                  {/* Capability 3: 3D Inspection Environment Viewport */}
+                  <div className="pcb-rviz-panel-3d">
+                    <div className="pcb-rviz-panel-header">
+                      <div className="pcb-rviz-panel-name">
+                        <Grid size={13} style={{ color: '#ff7628' }} />
+                        <span>3D INSPECTION VIEWPORT // [rviz_default_plugins/Grid & TF]</span>
+                      </div>
+                      <div className="pcb-rviz-coords">
+                        <span>FOV: 45°</span>
+                        <span>GRID: 0.1m</span>
+                      </div>
+                    </div>
+
+                    <div className="pcb-rviz-3d-scene">
+                      {/* SVG Interactive 3D Mockup of Industrial Cell */}
+                      <svg className="pcb-rviz-3d-svg" viewBox="0 0 540 320" fill="none">
+                        <defs>
+                          <pattern id="rvizGridPattern" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255, 118, 40, 0.08)" strokeWidth="0.8" />
+                          </pattern>
+                          <linearGradient id="conveyorGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="#1f1c19" />
+                            <stop offset="50%" stopColor="#2c2723" />
+                            <stop offset="100%" stopColor="#1f1c19" />
+                          </linearGradient>
+                          <linearGradient id="beamFrustum" x1="50%" y1="0%" x2="50%" y2="100%">
+                            <stop offset="0%" stopColor="rgba(255, 118, 40, 0.45)" />
+                            <stop offset="100%" stopColor="rgba(255, 118, 40, 0.04)" />
+                          </linearGradient>
+                        </defs>
+
+                        {/* RViz Ground Grid Floor */}
+                        <rect x="20" y="20" width="500" height="280" fill="url(#rvizGridPattern)" rx="8" />
+
+                        {/* Reference Grid Origin / TF Axes (world) */}
+                        <g transform="translate(60, 270)">
+                          <line x1="0" y1="0" x2="35" y2="0" stroke="#ef4444" strokeWidth="2.5" />
+                          <line x1="0" y1="0" x2="0" y2="-35" stroke="#10b981" strokeWidth="2.5" />
+                          <line x1="0" y1="0" x2="-20" y2="15" stroke="#3b82f6" strokeWidth="2.5" />
+                          <text x="40" y="4" fill="#ef4444" fontSize="8" fontFamily="monospace">X (world)</text>
+                          <text x="4" y="-38" fill="#10b981" fontSize="8" fontFamily="monospace">Z</text>
+                          <text x="-32" y="24" fill="#3b82f6" fontSize="8" fontFamily="monospace">Y</text>
+                        </g>
+
+                        {/* Conveyor Bed */}
+                        <g id="conveyorGroup">
+                          {/* Belt Structure */}
+                          <rect x="70" y="145" width="400" height="70" rx="6" fill="url(#conveyorGrad)" stroke="rgba(255, 118, 40, 0.35)" strokeWidth="1.5" />
+                          
+                          {/* Conveyor Motion Rollers / Stripes */}
+                          <line x1="120" y1="145" x2="120" y2="215" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
+                          <line x1="180" y1="145" x2="180" y2="215" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
+                          <line x1="240" y1="145" x2="240" y2="215" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
+                          <line x1="300" y1="145" x2="300" y2="215" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
+                          <line x1="360" y1="145" x2="360" y2="215" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
+                          <line x1="420" y1="145" x2="420" y2="215" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
+
+                          {/* Conveyor Motion Arrow Indicator */}
+                          <g opacity="0.6">
+                            <path d="M 85 180 L 100 180 M 96 175 L 101 180 L 96 185" stroke="#ff7628" strokeWidth="1.8" fill="none" />
+                            <path d="M 440 180 L 455 180 M 451 175 L 456 180 L 451 185" stroke="#ff7628" strokeWidth="1.8" fill="none" />
+                            <text x="85" y="198" fill="#ff9d63" fontSize="7" fontFamily="monospace">FEED ➔</text>
+                          </g>
+                        </g>
+
+                        {/* Optical Inspection Zone on Conveyor */}
+                        <g id="inspectionZone">
+                          <rect x="210" y="152" width="120" height="56" rx="4" fill="rgba(255, 118, 40, 0.08)" stroke="#ff7628" strokeWidth="1.5" strokeDasharray="4 2" />
+                          {/* Zone Corner Brackets */}
+                          <path d="M 210 162 V 152 H 220" stroke="#ff8a4b" strokeWidth="2" fill="none" />
+                          <path d="M 330 162 V 152 H 320" stroke="#ff8a4b" strokeWidth="2" fill="none" />
+                          <path d="M 210 198 V 208 H 220" stroke="#ff8a4b" strokeWidth="2" fill="none" />
+                          <path d="M 330 198 V 208 H 320" stroke="#ff8a4b" strokeWidth="2" fill="none" />
+                          <text x="270" y="140" textAnchor="middle" fill="#ff8a4b" fontSize="7.5" fontFamily="monospace" fontWeight="700">
+                            INSPECTION ZONE [X: 0.0m, Y: 0.0m]
+                          </text>
+                        </g>
+
+                        {/* Current PCB Positioned in Zone */}
+                        <g id="currentPcbModel" transform="translate(225, 158)">
+                          <rect x="0" y="0" width="90" height="44" rx="3" fill="#143320" stroke="#22c55e" strokeWidth="1.2" />
+                          {/* PCB Silk Traces */}
+                          <path d="M 10 10 H 30 V 25 H 55" stroke="#86efac" strokeWidth="1" strokeOpacity="0.4" fill="none" />
+                          <path d="M 20 34 H 45 V 18 H 80" stroke="#86efac" strokeWidth="1" strokeOpacity="0.4" fill="none" />
+                          <circle cx="10" cy="10" r="2" fill="#86efac" />
+                          <circle cx="80" cy="18" r="2" fill="#86efac" />
+                          {/* PCB Chip Model */}
+                          <rect x="36" y="13" width="18" height="18" rx="2" fill="#090909" stroke="#ff7628" strokeWidth="0.8" />
+                          <text x="45" y="24" textAnchor="middle" fill="#ff7628" fontSize="5.5" fontFamily="monospace">MCU</text>
+                          {/* Board Serial Label */}
+                          <text x="45" y="38" textAnchor="middle" fill="#ffffff" fontSize="7" fontFamily="monospace" fontWeight="700">
+                            {selectedRvizPcb.id}
+                          </text>
+
+                          {/* Localized Defect Indicator on Active PCB */}
+                          {selectedRvizPcb.status !== 'PASS' && (
+                            <g>
+                              <circle cx="22" cy="18" r="6" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="2 1" fill="rgba(239, 68, 68, 0.25)" />
+                              <line x1="22" y1="10" x2="22" y2="26" stroke="#ef4444" strokeWidth="0.8" />
+                              <line x1="14" y1="18" x2="30" y2="18" stroke="#ef4444" strokeWidth="0.8" />
+                            </g>
+                          )}
+                        </g>
+
+                        {/* Overhead Inspection Camera Mount & Telecentric Lens Frustum */}
+                        <g id="cameraMountGroup">
+                          {/* Mounting Stanchion */}
+                          <line x1="270" y1="40" x2="270" y2="70" stroke="#71717a" strokeWidth="4" />
+                          <rect x="250" y="65" width="40" height="22" rx="4" fill="#27272a" stroke="#ff7628" strokeWidth="1.2" />
+                          <circle cx="270" cy="87" r="7" fill="#090909" stroke="#ff7628" strokeWidth="1.5" />
+                          <circle cx="270" cy="87" r="3" fill="#38bdf8" />
+
+                          {/* Telecentric Light/Vision Frustum Cone */}
+                          <polygon points="263,94 277,94 330,152 210,152" fill="url(#beamFrustum)" />
+                          <line x1="263" y1="94" x2="210" y2="152" stroke="#ff7628" strokeWidth="0.8" strokeDasharray="3 2" opacity="0.6" />
+                          <line x1="277" y1="94" x2="330" y2="152" stroke="#ff7628" strokeWidth="0.8" strokeDasharray="3 2" opacity="0.6" />
+
+                          {/* Camera TF Label */}
+                          <text x="270" y="58" textAnchor="middle" fill="#38bdf8" fontSize="7.5" fontFamily="monospace">
+                            frame: camera_link [Z: +0.65m]
+                          </text>
+                        </g>
+
+                        {/* Proximity Sensor */}
+                        <g id="proximitySensorGroup">
+                          <rect x="175" y="215" width="16" height="20" rx="3" fill="#3f3f46" stroke="#f59e0b" strokeWidth="1" />
+                          <circle cx="183" cy="225" r="3" fill="#ef4444" />
+                          {/* Infrared Trigger Beam */}
+                          <line x1="183" y1="215" x2="183" y2="175" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="3 1.5" />
+                          <circle cx="183" cy="175" r="2.5" fill="#ef4444" />
+                          <text x="183" y="247" textAnchor="middle" fill="#f59e0b" fontSize="7" fontFamily="monospace">
+                            sensor_link
+                          </text>
+                        </g>
+
+                        {/* Live Status Overlay in 3D Viewport */}
+                        <g transform="translate(30, 35)">
+                          <rect x="0" y="0" width="140" height="52" rx="5" fill="rgba(10, 8, 7, 0.85)" stroke="rgba(255, 118, 40, 0.25)" strokeWidth="1" />
+                          <text x="8" y="14" fill="#ff8a4b" fontSize="7.5" fontFamily="monospace" fontWeight="700">RViz2 3D ENVIRONMENT</text>
+                          <text x="8" y="26" fill="#c4bfb9" fontSize="6.8" fontFamily="monospace">PCB Conveyor: {selectedConveyorState}</text>
+                          <text x="8" y="37" fill="#c4bfb9" fontSize="6.8" fontFamily="monospace">Inspection: {selectedRvizState.state}</text>
+                          <text x="8" y="47" fill="#c4bfb9" fontSize="6.8" fontFamily="monospace">Current ID: {selectedRvizPcb.id}</text>
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Dual Live Image Views: Capability 1 & Capability 2 */}
+                  <div className="pcb-rviz-panel-images">
+                    {/* Capability 1: Live Camera Visualization (/pcb/camera/image) */}
+                    <div className="pcb-rviz-stream-box">
+                      <div className="pcb-rviz-stream-header">
+                        <div className="pcb-rviz-stream-title">
+                          <Camera size={13} style={{ color: '#ff7628' }} />
+                          <span>1. Live Camera Visualization</span>
+                        </div>
+                        <span className="pcb-rviz-topic-chip">/pcb/camera/image</span>
+                      </div>
+                      
+                      <div className="pcb-rviz-camera-feed">
+                        <div className="pcb-rviz-stream-hud">
+                          <span className="pcb-rviz-rec-dot" />
+                          <span>LIVE FEED // 10 FPS // 640x480</span>
+                          <span className="pcb-rviz-feed-format">sensor_msgs/Image</span>
+                        </div>
+
+                        {/* Raw Frame Simulation */}
+                        <div className="pcb-rviz-raw-canvas">
+                          <svg viewBox="0 0 280 140" className="pcb-rviz-feed-svg">
+                            <rect width="280" height="140" fill="#0d2818" />
+                            <path d="M 20 30 H 90 V 80 H 160 V 50 H 260" stroke="#4ade80" strokeWidth="2" strokeOpacity="0.5" fill="none" />
+                            <path d="M 40 120 V 90 H 120 V 110 H 220 V 60 H 270" stroke="#4ade80" strokeWidth="2" strokeOpacity="0.4" fill="none" />
+                            <circle cx="90" cy="80" r="5" fill="#4ade80" />
+                            <circle cx="160" cy="50" r="5" fill="#4ade80" />
+                            <circle cx="220" cy="110" r="5" fill="#4ade80" />
+                            <rect x="110" y="45" width="60" height="40" rx="4" fill="#05150a" stroke="#22c55e" strokeWidth="1" />
+                            <text x="140" y="68" textAnchor="middle" fill="#86efac" fontSize="8" fontFamily="monospace">IC-TEST</text>
+                            <text x="140" y="130" textAnchor="middle" fill="#86efac" fontSize="7.5" fontFamily="monospace">
+                              Raw Gazebo Frame [Target: {selectedRvizPcb.id}]
+                            </text>
+                          </svg>
+                          <div className="pcb-feed-scanline" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Capability 2: YOLO Detection Visualization (/pcb/detected_image) */}
+                    <div className="pcb-rviz-stream-box">
+                      <div className="pcb-rviz-stream-header">
+                        <div className="pcb-rviz-stream-title">
+                          <Eye size={13} style={{ color: '#ff7628' }} />
+                          <span>2. YOLO Detection Visualization</span>
+                        </div>
+                        <span className="pcb-rviz-topic-chip">/pcb/detected_image</span>
+                      </div>
+
+                      <div className="pcb-rviz-camera-feed">
+                        <div className="pcb-rviz-stream-hud">
+                          <span className={`pcb-rviz-verdict-tag ${selectedRvizPcb.status ? selectedRvizPcb.status.toLowerCase() : 'pass'}`}>
+                            DECISION: {selectedRvizPcb.verdict}
+                          </span>
+                          <span className="pcb-rviz-feed-format">YOLOv8 Output</span>
+                        </div>
+
+                        {/* Annotated Frame Simulation with Bounding Box */}
+                        <div className="pcb-rviz-raw-canvas">
+                          <svg viewBox="0 0 280 140" className="pcb-rviz-feed-svg">
+                            <rect width="280" height="140" fill="#0d2818" />
+                            <path d="M 20 30 H 90 V 80 H 160 V 50 H 260" stroke="#4ade80" strokeWidth="2" strokeOpacity="0.5" fill="none" />
+                            <path d="M 40 120 V 90 H 120 V 110 H 220 V 60 H 270" stroke="#4ade80" strokeWidth="2" strokeOpacity="0.4" fill="none" />
+                            <circle cx="90" cy="80" r="5" fill="#4ade80" />
+                            <circle cx="160" cy="50" r="5" fill="#4ade80" />
+                            <circle cx="220" cy="110" r="5" fill="#4ade80" />
+                            <rect x="110" y="45" width="60" height="40" rx="4" fill="#05150a" stroke="#22c55e" strokeWidth="1" />
+                            <text x="140" y="68" textAnchor="middle" fill="#86efac" fontSize="8" fontFamily="monospace">IC-TEST</text>
+
+                            {/* YOLO Predicted Bounding Box */}
+                            {selectedRvizPcb.status !== 'PASS' ? (
+                              <g>
+                                <rect
+                                  x={selectedRvizPcb.x - 40}
+                                  y={selectedRvizPcb.y - 25}
+                                  width="76"
+                                  height="44"
+                                  fill="rgba(239, 68, 68, 0.15)"
+                                  stroke="#ef4444"
+                                  strokeWidth="1.8"
+                                  strokeDasharray="4 2"
+                                />
+                                {/* Bounding Box Corner Reticles */}
+                                <path d={`M ${selectedRvizPcb.x - 40} ${selectedRvizPcb.y - 15} V ${selectedRvizPcb.y - 25} H ${selectedRvizPcb.x - 30}`} stroke="#ff7628" strokeWidth="2" fill="none" />
+                                <path d={`M ${selectedRvizPcb.x + 36} ${selectedRvizPcb.y - 15} V ${selectedRvizPcb.y - 25} H ${selectedRvizPcb.x + 26}`} stroke="#ff7628" strokeWidth="2" fill="none" />
+                                <path d={`M ${selectedRvizPcb.x - 40} ${selectedRvizPcb.y + 9} V ${selectedRvizPcb.y + 19} H ${selectedRvizPcb.x - 30}`} stroke="#ff7628" strokeWidth="2" fill="none" />
+                                <path d={`M ${selectedRvizPcb.x + 36} ${selectedRvizPcb.y + 9} V ${selectedRvizPcb.y + 19} H ${selectedRvizPcb.x + 26}`} stroke="#ff7628" strokeWidth="2" fill="none" />
+
+                                {/* Tag Above Bounding Box */}
+                                <rect
+                                  x={selectedRvizPcb.x - 40}
+                                  y={selectedRvizPcb.y - 39}
+                                  width="115"
+                                  height="13"
+                                  fill="#ef4444"
+                                  rx="2"
+                                />
+                                <text
+                                  x={selectedRvizPcb.x - 36}
+                                  y={selectedRvizPcb.y - 29}
+                                  fill="#ffffff"
+                                  fontSize="6.8"
+                                  fontFamily="monospace"
+                                  fontWeight="700"
+                                >
+                                  {selectedRvizPcb.defect ? selectedRvizPcb.defect.toUpperCase() : 'DEFECT'} // {selectedRvizPcb.confidence}
+                                </text>
+                              </g>
+                            ) : (
+                              <g>
+                                <rect x="50" y="25" width="180" height="85" fill="rgba(34, 197, 94, 0.1)" stroke="#22c55e" strokeWidth="1.5" strokeDasharray="3 3" rx="4" />
+                                <rect x="50" y="10" width="135" height="14" fill="#22c55e" rx="2" />
+                                <text x="56" y="20" fill="#05150a" fontSize="7.5" fontFamily="monospace" fontWeight="700">
+                                  VERIFIED: ZERO DEFECTS (96.5%)
+                                </text>
+                              </g>
+                            )}
+                          </svg>
+                          <div className="pcb-feed-scanline" />
+                        </div>
+
+                        {/* Defect Metadata Box */}
+                        <div className="pcb-rviz-det-meta">
+                          <div className="pcb-rviz-meta-item">
+                            <span>Defect Class:</span>
+                            <strong>{selectedRvizPcb.defect}</strong>
+                          </div>
+                          <div className="pcb-rviz-meta-item">
+                            <span>Confidence:</span>
+                            <strong style={{ color: selectedRvizPcb.status === 'PASS' ? '#10b981' : '#f59e0b' }}>
+                              {selectedRvizPcb.confidence}
+                            </strong>
+                          </div>
+                          <div className="pcb-rviz-meta-item">
+                            <span>Coordinates:</span>
+                            <code>{selectedRvizPcb.bbox}</code>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Capability 6: One-Shot Inspection Visualization */}
+              <div className="pcb-section-header" style={{ marginTop: '2.4rem' }}>
+                <div className="pcb-section-title-wrap">
+                  <span className="pcb-section-num">04.3</span>
+                  <h4 className="pcb-section-title">One-Shot Inspection Visualization Cycle</h4>
+                </div>
+                <span className="pcb-section-badge">STATIONARY CAPTURE</span>
+              </div>
+
+              <div className="pcb-card-box" style={{ marginBottom: '1.8rem' }}>
+                <p className="pcb-card-desc">
+                  Each PCB is inspected <strong>exactly once</strong> upon reaching the designated optical inspection zone. The automated cell synchronizes hardware stops and software inferences in real time:
+                </p>
+
+                {/* 6-Step Cycle Interactive Pipeline */}
+                <div className="pcb-rviz-cycle-row">
+                  {pcbCaseStudy.rvizVisualization.oneShotCycle.map((st, i) => (
+                    <div
+                      key={i}
+                      className={`pcb-rviz-cycle-step ${activeCycleStep === i ? 'active' : ''}`}
+                      onClick={() => setActiveCycleStep(i)}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <div className="pcb-cycle-num">{st.step}</div>
+                      <div className="pcb-cycle-title">{st.title}</div>
+                      <div className="pcb-cycle-desc">{st.desc}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pcb-rviz-cycle-summary">
+                  <span className="pcb-cycle-summary-pill">ONE-SHOT INSPECTION PIPELINE:</span>
+                  <code>PCB detected ➔ conveyor stopped ➔ camera frame captured ➔ YOLO inspection ➔ result displayed ➔ conveyor resumes</code>
+                </div>
+              </div>
+
+              {/* Capabilities 7 & 8: ROS 2 Integration & Industrial Monitoring Concept */}
+              <div className="pcb-two-col" style={{ marginBottom: '1.5rem' }}>
+                {/* Capability 7: ROS 2 Integration */}
+                <div className="pcb-card-box">
+                  <h4 className="pcb-card-title">
+                    <Cpu size={18} style={{ color: '#ff7628' }} />
+                    7. ROS 2 Real-Time Integration Architecture
+                  </h4>
+                  <p className="pcb-card-desc">
+                    RViz2 acts as the central visualization subscriber, establishing direct real-time communication across the industrial stack without intermediate file writing:
+                  </p>
+
+                  <ul className="pcb-rviz-integration-list">
+                    <li>
+                      <strong>Gazebo Simulation:</strong> Computes physics dynamics and transmits raw virtual camera sensor frames.
+                    </li>
+                    <li>
+                      <strong>ROS 2 Camera Topics:</strong> <code>/pcb/camera/image</code> streams raw true-color frames at 10 FPS directly to nodes and RViz2.
+                    </li>
+                    <li>
+                      <strong>YOLO Inference Node:</strong> Converts ROS image messages with CvBridge, runs localized inference, and publishes annotated overlays to <code>/pcb/detected_image</code>.
+                    </li>
+                    <li>
+                      <strong>Inspection Controller:</strong> Orchestrates start/stop trigger events via <code>/pcb/inspection_trigger</code> and <code>/pcb/inspection_done</code>.
+                    </li>
+                    <li>
+                      <strong>RViz2 Visualization:</strong> Aggregates live feeds, 3D conveyor transforms, sensor states, and bounding box overlays into a unified operator cockpit.
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Capability 8: Industrial Monitoring Concept */}
+                <div className="pcb-card-box">
+                  <h4 className="pcb-card-title">
+                    <Activity size={18} style={{ color: '#ff7628' }} />
+                    8. Industrial Monitoring Concept
+                  </h4>
+                  <p className="pcb-card-desc">
+                    In high-volume automated manufacturing, operators and test engineers require immediate optical and telemetry visibility into cell operations. RViz2 serves as the primary monitoring terminal observing:
+                  </p>
+
+                  <div className="pcb-rviz-aspects-grid">
+                    {pcbCaseStudy.rvizVisualization.monitoringAspects.map((aspect, i) => (
+                      <div key={i} className="pcb-rviz-aspect-card">
+                        <span className="pcb-aspect-num">0{i + 1}</span>
+                        <div>
+                          <strong className="pcb-aspect-label">{aspect.label}</strong>
+                          <span className="pcb-aspect-val">{aspect.value}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ===================================================================
+              TAB 05: WEB & MOBILE PLATFORM
               =================================================================== */}
           {activeTab === 'platform' && (
             <div className="pcb-tab-pane">

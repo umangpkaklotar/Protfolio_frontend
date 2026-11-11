@@ -30,9 +30,10 @@ export const pcbCaseStudy = {
     { label: 'Inspection Database', value: 'MongoDB Records' },
     { label: 'Sensor Camera', value: '640x480 R8G8B8 @ 10 FPS' },
     { label: 'Station Logic', value: '1-by-1 Sequential Conveyor' },
+    { label: 'Visualization Layer', value: 'RViz2 Real-Time Monitoring' },
   ],
 
-  // 16 Key Highlights directly from spec
+  // 17 Key Highlights directly from spec
   keyHighlights: [
     { icon: 'Bot', text: 'YOLOv8-based PCB defect detection' },
     { icon: 'Search', text: '7 PCB defect classes' },
@@ -44,6 +45,7 @@ export const pcbCaseStudy = {
     { icon: 'Factory', text: 'Industrial inspection workflow' },
     { icon: 'Cpu', text: 'ROS 2 integration' },
     { icon: 'Globe', text: 'Gazebo virtual production line' },
+    { icon: 'Monitor', text: 'RViz2 real-time inspection visualization' },
     { icon: 'Truck', text: 'Conveyor-based PCB inspection' },
     { icon: 'Radio', text: 'Sensor-triggered inspection' },
     { icon: 'Activity', text: 'Industrial monitoring dashboard' },
@@ -160,7 +162,7 @@ export const pcbCaseStudy = {
       topic: '/pcb/camera/image',
       type: 'sensor_msgs/msg/Image',
       rate: '10 FPS (640x480)',
-      description: 'Transmits live raw camera frames captured by the Gazebo virtual camera sensor directly to the ROS 2 inspection node.'
+      description: 'Transmits live raw camera frames captured by the Gazebo virtual camera sensor directly to the ROS 2 inspection node and RViz2 Image Display.'
     },
     {
       topic: '/pcb/inspection_trigger',
@@ -178,7 +180,7 @@ export const pcbCaseStudy = {
       topic: '/pcb/detected_image',
       type: 'sensor_msgs/msg/Image',
       rate: 'Post-inference',
-      description: 'Publishes OpenCV-annotated PCB frame rendered with bounding boxes, defect labels, and confidence tags for operator display.'
+      description: 'Publishes OpenCV-annotated PCB frame rendered with bounding boxes, defect labels, and confidence tags for RViz2 visualization and operator display.'
     },
     {
       topic: '/pcb/inspection_done',
@@ -234,6 +236,7 @@ export const pcbCaseStudy = {
       items: [
         { name: 'ROS 2 Jazzy', desc: 'Industrial communication bus, node orchestration, and message queues' },
         { name: 'Gazebo Sim 8', desc: 'High-fidelity physics simulation of factory floor and conveyor line' },
+        { name: 'RViz2', desc: 'Real-time 3D visualization and industrial monitoring layer displaying live sensor feeds, YOLO detections, and inspection cell states' },
         { name: 'SDF 3D Models', desc: 'Simulation models for conveyor, inspection stand, camera mount, and PCBs' },
         { name: 'PCB Texture Mapping', desc: 'Original CV dataset defect photos mapped onto 3D PCB models' },
         { name: 'Proximity Sensor', desc: 'Optical sensor triggering sequential one-by-one inspection queue' }
@@ -334,12 +337,122 @@ export const pcbCaseStudy = {
 │       │   │   ├── pcb_005/
 │       │   │   ├── pcb_conveyor/
 │       │   │   └── inspection_camera/
+│       │   ├── rviz/
+│       │   │   └── pcb_inspection.rviz
 │       │   └── worlds/
 │       │
 │       └── pcb_inspection/
 │           └── yolo_node.py
 │
 └── trained_model/
-    └── best.pt`
+    └── best.pt`,
+
+  // Real-Time RViz2 Inspection Visualization
+  rvizVisualization: {
+    title: 'Real-Time RViz2 Inspection Visualization',
+    shortDescription: 'Integrated RViz2 with ROS 2 and Gazebo to visualize the PCB inspection pipeline in real time, including live camera streams, YOLO detection results, inspection states, and the 3D inspection environment.',
+    architecture: ['Gazebo', 'ROS 2', 'YOLO', 'RViz2'],
+    technicalFlow: ['Camera', 'ROS 2', 'YOLO', 'Detection Result', 'RViz2'],
+    techBadges: ['ROS 2', 'RViz2', 'Gazebo', 'YOLO', 'Computer Vision', 'Real-Time Visualization'],
+    highlights: [
+      'Live Camera Feed',
+      'YOLO Detection Overlay',
+      '3D Inspection Visualization',
+      'Real-Time Inspection Status',
+      'PCB Tracking',
+      'ROS 2 Integration',
+      'Industrial Monitoring'
+    ],
+    pcbList: [
+      {
+        id: 'PCB_001',
+        defect: 'Missing Hole',
+        confidence: '77.2%',
+        severity: 'Critical',
+        status: 'REWORK',
+        verdict: 'FAIL / REWORK',
+        bbox: '[x1: 142, y1: 88, x2: 218, y2: 156]',
+        action: 'Secondary CNC Drilling',
+        x: 180,
+        y: 122
+      },
+      {
+        id: 'PCB_002',
+        defect: 'Short Circuit',
+        confidence: '88.4%',
+        severity: 'Critical',
+        status: 'FAIL',
+        verdict: 'FAIL / SCRAP',
+        bbox: '[x1: 204, y1: 112, x2: 276, y2: 178]',
+        action: 'Trace Laser Trimming',
+        x: 240,
+        y: 145
+      },
+      {
+        id: 'PCB_003',
+        defect: 'Zero Defects',
+        confidence: '96.5%',
+        severity: 'None',
+        status: 'PASS',
+        verdict: 'PASS / VERIFIED',
+        bbox: 'None (Clean Substrate)',
+        action: 'Advance to Packaging',
+        x: 160,
+        y: 90
+      },
+      {
+        id: 'PCB_004',
+        defect: 'Open Circuit',
+        confidence: '91.5%',
+        severity: 'Critical',
+        status: 'FAIL',
+        verdict: 'FAIL / SCRAP',
+        bbox: '[x1: 96, y1: 64, x2: 168, y2: 134]',
+        action: 'Scrapped / Solder Jumper',
+        x: 132,
+        y: 99
+      },
+      {
+        id: 'PCB_005',
+        defect: 'Mousebite',
+        confidence: '84.1%',
+        severity: 'Medium',
+        status: 'REVIEW',
+        verdict: 'REWORK / ROUTER CHECK',
+        bbox: '[x1: 240, y1: 140, x2: 305, y2: 175]',
+        action: 'Router Profiling Check',
+        x: 272,
+        y: 157
+      }
+    ],
+    inspectionStates: [
+      { state: 'WAITING', desc: 'Awaiting next PCB arrival at inspection zone', color: '#9ca3af' },
+      { state: 'DETECTED', desc: 'Optical proximity sensor triggered by incoming board', color: '#3b82f6' },
+      { state: 'INSPECTING', desc: 'Conveyor halted; YOLOv8 inferring on camera frame', color: '#f59e0b' },
+      { state: 'DONE', desc: 'Inference completed; decision published to RViz2 & ROS', color: '#10b981' },
+      { state: 'ERROR', desc: 'Inspection fault, frame drop, or safety barrier tripped', color: '#ef4444' }
+    ],
+    conveyorStates: [
+      { state: 'RUNNING', desc: 'Belt motor active, transporting boards along the inspection line', color: '#10b981' },
+      { state: 'STOPPED', desc: 'Belt halted at optical inspection zone during one-shot camera capture', color: '#f59e0b' }
+    ],
+    oneShotCycle: [
+      { step: '01', title: 'PCB Detected', desc: 'Optical proximity sensor trips as PCB enters the designated inspection zone.' },
+      { step: '02', title: 'Conveyor Stopped', desc: 'ROS 2 conveyor controller halts belt motor to eliminate motion blur during capture.' },
+      { step: '03', title: 'Camera Frame Captured', desc: 'Gazebo camera captures crisp 640x480 frame and publishes to /pcb/camera/image.' },
+      { step: '04', title: 'YOLO Inspection', desc: 'ROS 2 YOLOv8 inference node processes frame and predicts localized defect bounding boxes.' },
+      { step: '05', title: 'Result Displayed', desc: 'Annotated image published to /pcb/detected_image and displayed in RViz2 in real time.' },
+      { step: '06', title: 'Conveyor Resumes', desc: '/pcb/inspection_done signal triggers conveyor controller to advance next PCB in queue.' }
+    ],
+    monitoringAspects: [
+      { label: 'Current PCB', value: 'Real-time tracking of active board ID (PCB_001..PCB_005) at the optical station' },
+      { label: 'Camera Feed', value: 'Continuous 10 FPS live optical stream on /pcb/camera/image' },
+      { label: 'AI Inspection Result', value: 'Instantaneous YOLO prediction overlay streamed on /pcb/detected_image' },
+      { label: 'Defect Information', value: 'Localized bounding boxes, class classification, and percentage confidence' },
+      { label: 'Conveyor State', value: 'Real-time binary telemetry of conveyor motor (RUNNING vs STOPPED)' },
+      { label: 'Inspection State', value: 'State machine progression (WAITING → DETECTED → INSPECTING → DONE → ERROR)' },
+      { label: '3D Inspection Environment', value: 'Spatial view of conveyor, overhead camera, sensor, PCB zone, grid & TF frames' }
+    ]
+  }
 };
 

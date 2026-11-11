@@ -183,7 +183,7 @@ const About = () => {
               </button>
             </div>
 
-            <div className="about-terminal-body">
+            <div className="about-terminal-body" data-lenis-prevent="true">
               {activeTab === 'dossier' && (
                 <div>
                   <span className="about-json-punct">{'{'}</span>

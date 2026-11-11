@@ -1,5 +1,5 @@
 import React, { useRef, useLayoutEffect, useState, useMemo, useEffect } from 'react';
-import { ArrowUpRight, Sparkles, FolderGit2, CheckCircle2, Mic, Cpu, Activity, FileText, Bot } from 'lucide-react';
+import { ArrowUpRight, Sparkles, FolderGit2, CheckCircle2, Cpu, Activity, FileText, Bot } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { projects } from '../data/portfolioData';
@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 // Project-specific metrics & highlights
 const PROJECT_HIGHLIGHTS = {
   1: {
-    metrics: ['7 Defect Classes', 'YOLOv8 + OpenCV', 'ROS 2 + Gazebo'],
+    metrics: ['7 Defect Classes', 'YOLOv8 + OpenCV', 'ROS 2 + Gazebo + RViz2'],
     statusDot: 'orange',
     systemLabel: 'INDUSTRIAL AOI // ROS 2 + YOLOv8',
     systemBadge: 'STATUS: ACTIVE',
@@ -21,12 +21,6 @@ const PROJECT_HIGHLIGHTS = {
     statusDot: 'orange',
     systemLabel: 'ENTERPRISE RAG // GROQ LPU + FAISS',
     systemBadge: 'SSE STREAMING',
-  },
-  5: {
-    metrics: ['96.8% Accuracy', 'Indic Regional Model', 'Acoustic NLP'],
-    statusDot: 'orange',
-    systemLabel: 'ACOUSTIC STREAM // GUJ-IN',
-    systemBadge: '44.1 kHz',
   },
   6: {
     metrics: ['AST Semantic Mapping', 'Multi-Language', 'Zero Syntax Loss'],
@@ -107,11 +101,10 @@ const Projects = () => {
       count: projects.filter(p => p.category.toLowerCase().includes('web')).length 
     },
     { 
-      key: 'CV_NLP', 
-      label: 'CV & NLP', 
+      key: 'CV', 
+      label: 'Computer Vision', 
       count: projects.filter(p => 
-        p.category.toLowerCase().includes('vision') || 
-        p.category.toLowerCase().includes('nlp')
+        p.category.toLowerCase().includes('vision')
       ).length 
     },
   ], []);
@@ -127,10 +120,9 @@ const Projects = () => {
     if (activeFilter === 'WEB') {
       return projects.filter(p => p.category.toLowerCase().includes('web'));
     }
-    if (activeFilter === 'CV_NLP') {
+    if (activeFilter === 'CV' || activeFilter === 'CV_NLP') {
       return projects.filter(p => 
-        p.category.toLowerCase().includes('vision') || 
-        p.category.toLowerCase().includes('nlp')
+        p.category.toLowerCase().includes('vision')
       );
     }
     return projects;
@@ -303,32 +295,7 @@ const Projects = () => {
             </div>
           )}
 
-          {/* 3. Gujarati Speech Recognition Visual */}
-          {project.id === 5 && (
-            <div className="audio-preview-box">
-              <div className="audio-spectrum-bars">
-                {[45, 80, 35, 92, 60, 85, 40, 95, 70, 50, 85, 65, 90, 40, 85, 55, 75, 35, 65, 50].map((h, i) => (
-                  <span
-                    key={i}
-                    className="audio-spec-bar"
-                    style={{
-                      '--target-h': `${h}%`,
-                      animationDelay: `${i * 0.06}s`,
-                    }}
-                  />
-                ))}
-              </div>
-              <div className="audio-transcription-card">
-                <div className="audio-guj-text">"નમસ્તે, કેમ છો? (Welcome)"</div>
-                <div className="audio-trans-meta">
-                  <span><Mic size={10} style={{ display: 'inline', marginRight: 4 }} />CONF: 96.8%</span>
-                  <span>LANG: GU-IN // CTC</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* 4. AI Code Converter Visual */}
+          {/* 3. AI Code Converter Visual */}
           {project.id === 6 && (
             <div className="code-preview-box">
               <div className="code-pane">

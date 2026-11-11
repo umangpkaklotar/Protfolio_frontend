@@ -23,7 +23,13 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Lenis provides physics-driven smooth scrolling. Native smooth scroll MUST be disabled to avoid frame collisions and jitter. */
+  scroll-behavior: auto !important;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
 }
 
 body {
