@@ -37,6 +37,7 @@ const SkillCard = ({ skillGroup, index }) => {
   const cardRef = useRef(null);
 
   const handleMouseMove = (e) => {
+    if (window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches) return;
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
@@ -53,7 +54,7 @@ const SkillCard = ({ skillGroup, index }) => {
 
   const handleMouseLeave = () => {
     if (cardRef.current) {
-      cardRef.current.style.transform = 'perspective(850px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      cardRef.current.style.transform = '';
     }
   };
 

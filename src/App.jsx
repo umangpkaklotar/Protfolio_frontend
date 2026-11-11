@@ -13,6 +13,7 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
+import Chatbot from './components/Chatbot';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -156,6 +157,9 @@ function App() {
         <Contact />
         <Footer />
       </main>
+
+      {/* Umang's AI Portfolio Chatbot Widget */}
+      <Chatbot />
     </>
   );
 }

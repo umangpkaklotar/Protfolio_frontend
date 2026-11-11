@@ -130,6 +130,7 @@ const Projects = () => {
 
   // Handle interactive mouse spotlight & subtle 3D tilt
   const handleMouseMove = (e) => {
+    if (window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches) return;
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -144,6 +145,10 @@ const Projects = () => {
   };
 
   const handleMouseLeave = (e) => {
+    if (window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches) {
+      e.currentTarget.style.transform = '';
+      return;
+    }
     e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
   };
 
