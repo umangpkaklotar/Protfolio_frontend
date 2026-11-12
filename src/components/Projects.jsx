@@ -422,7 +422,7 @@ const Projects = () => {
             return (
               <div
                 key={project.id}
-                className="project-card"
+                className={`project-card ${project.id === 4 ? 'project-card-rag' : ''}`}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 style={{

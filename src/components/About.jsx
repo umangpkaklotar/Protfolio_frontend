@@ -109,15 +109,20 @@ const About = () => {
 
               <div className="about-story-paragraphs">
                 <p className="about-story-p">
-                  I'm <strong>Umang P. Kaklotar</strong>, a Web Developer, Frontend Specialist, and AI/ML Enthusiast.
-                  With a solid foundation from my <strong>Bachelor of Computer Applications (BCA)</strong> and hands-on
-                  production experience at <strong>Jemistry Info Solutions</strong>, I focus on turning complex technical
-                  ideas into seamless, user-centric software.
+                  I’m <strong>Umang P. Kaklotar</strong>, an AI/ML Enthusiast specializing in{' '}
+                  <strong>Machine Learning, Deep Learning, and Computer Vision</strong>. With a solid foundation from my{' '}
+                  <strong>Bachelor of Computer Applications (BCA)</strong> and hands-on experience at{' '}
+                  <strong>Jemistry Info Solutions</strong>, I focus on turning complex technical ideas into practical,
+                  intelligent solutions.
                 </p>
                 <p className="about-story-p">
-                  My work lives at the convergence of two passions: crafting ultra-smooth, responsive 60fps web interfaces
-                  using modern frameworks like <strong>React, GSAP, and Vite</strong>, and exploring practical machine learning
-                  solutions from computer vision defect detection to localized speech models.
+                  My work focuses on building AI-powered systems using technologies such as{' '}
+                  <strong>Python, PyTorch, OpenCV, YOLO, and modern Machine Learning tools</strong>. I enjoy solving
+                  real-world problems through computer vision, predictive models, and intelligent automation.
+                </p>
+                <p className="about-story-p">
+                  I’m passionate about exploring new AI technologies, developing impactful projects, and continuously
+                  improving my skills in <strong>ML, Deep Learning, and Computer Vision</strong>.
                 </p>
               </div>
 

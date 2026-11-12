@@ -6,7 +6,6 @@ import {
   Sparkles,
   RotateCcw,
   ExternalLink,
-  ShieldCheck,
   AlertCircle,
 } from 'lucide-react';
 import './Chatbot.css';
@@ -24,8 +23,7 @@ const SUGGESTED_QUESTIONS = [
 const INITIAL_MESSAGE = {
   id: 'msg-welcome',
   role: 'assistant',
-  text: "Hello! I am **Antigravity**, Umang P. Kaklotar's AI Portfolio Assistant. I have direct access to his verified project documentation, technical skills, and experience records.\n\nAsk me anything about his work in **Computer Vision (YOLOv8, AOI)**, **Industrial Robotics (ROS 2, Gazebo)**, **Enterprise RAG**, or frontend engineering!",
-  sources: ['knowledge.md (Personal Information)', 'knowledge.md (About)'],
+  text: "Hello! I am **Umang AI**, Umang P. Kaklotar's AI Portfolio Assistant. I have direct access to his verified project documentation, technical skills, and experience records.\n\nAsk me anything about his work in **Computer Vision (YOLOv8, AOI)**, **Industrial Robotics (ROS 2, Gazebo)**, **Enterprise RAG**, or frontend engineering!",
   timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
 };
 
@@ -191,7 +189,6 @@ const Chatbot = () => {
           id: botMessageId,
           role: 'assistant',
           text: data.answer || "I received an empty response from the portfolio server.",
-          sources: data.sources || [],
           timestamp: botTimestamp,
         },
       ]);
@@ -207,7 +204,6 @@ const Chatbot = () => {
           role: 'assistant',
           isError: true,
           text: `⚠️ **Connection Notice**\n\nCould not reach the backend AI server at \`${endpoint}\`.\n\n*Troubleshooting:*\n- Ensure the FastAPI server is running with: \`python -m uvicorn app.main:app --reload --port 8000\` in the \`backend/\` directory.\n- Verify CORS settings in \`backend/.env\`.\n- Technical details: *${err.message}*`,
-          sources: [],
           timestamp: botTimestamp,
         },
       ]);
@@ -334,22 +330,6 @@ const Chatbot = () => {
                   <div className="chat-bubble-content">
                     {formatMessageText(msg.text)}
                   </div>
-
-                  {/* Grounded Citation Sources */}
-                  {msg.sources && msg.sources.length > 0 && (
-                    <div className="chat-sources-block">
-                      <span className="chat-sources-label">
-                        <ShieldCheck size={11} /> Verified Sources:
-                      </span>
-                      <div className="chat-sources-pills">
-                        {msg.sources.map((src, idx) => (
-                          <span key={idx} className="chat-source-pill" title={src}>
-                            {src}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
 
                   <span className="chat-bubble-time">{msg.timestamp}</span>
                 </div>

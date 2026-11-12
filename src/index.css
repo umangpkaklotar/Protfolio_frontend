@@ -26,7 +26,7 @@ html {
   /* Lenis provides physics-driven smooth scrolling. Native smooth scroll MUST be disabled to avoid frame collisions and jitter. */
   scroll-behavior: auto !important;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 html.lenis,
@@ -40,7 +40,7 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-primary);
   font-family: var(--font-body);
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
   -webkit-text-size-adjust: 100%;
 }
@@ -49,7 +49,7 @@ body {
 main {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
 }
 
@@ -74,7 +74,8 @@ canvas {
 
 .bg-glow-1,
 .bg-glow-2 {
-  position: absolute;
+  position: fixed;
+  z-index: -1;
   border-radius: 50%;
   filter: blur(120px);
   opacity: 0.4;
@@ -3767,6 +3768,20 @@ section {
     padding: clamp(1.6rem, 3vw, 2.2rem);
   }
 
+  .project-card.project-card-rag {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .project-card-rag .project-card-left,
+  .project-card-rag .project-card-right,
+  .project-card-rag .project-preview-frame,
+  .project-card-rag .preview-canvas-wrap {
+    min-width: 0;
+    max-width: 100%;
+  }
+
   .project-card-right {
     order: 2;
   }
@@ -3902,21 +3917,73 @@ section {
     max-width: 100%;
   }
 
+  .project-card-rag .project-card-top {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .project-card-rag .project-card-category {
+    letter-spacing: 0.08em;
+  }
+
+  .project-card-rag .preview-top-hud,
+  .project-card-rag .preview-bottom-hud {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .project-card-rag .preview-hud-title {
+    min-width: 0;
+    word-break: break-word;
+  }
+
   .rag-preview-box {
     max-width: 100%;
+    min-width: 0;
+    padding: 0.85rem 0.85rem 2.4rem;
+    box-sizing: border-box;
+  }
+
+  .rag-preview-top-tags,
+  .rag-preview-sources {
+    flex-wrap: wrap;
+  }
+
+  .rag-preview-query-box {
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
   }
 
   .rag-query-text {
-    font-size: 0.76rem;
+    font-size: 0.74rem;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
+  }
+
+  .rag-preview-stream-box {
+    min-width: 0;
+    max-width: 100%;
+    padding: 0.6rem 0.7rem;
+  }
+
+  .rag-stream-ai-header {
+    flex-wrap: wrap;
+    min-width: 0;
+    word-break: break-word;
   }
 
   .rag-stream-text {
     font-size: 0.74rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .rag-source-chip {
-    font-size: 0.64rem;
-    padding: 0.25rem 0.5rem;
+    font-size: 0.62rem;
+    padding: 0.2rem 0.45rem;
   }
 
   .code-preview-box {
@@ -4607,6 +4674,8 @@ section {
     grid-template-columns: 1fr;
     gap: 1.8rem;
     padding-bottom: 2rem;
+    text-align: center;
+    justify-items: center;
   }
 
   .footer-brand {
@@ -4615,11 +4684,40 @@ section {
 
   .footer-bio {
     font-size: 0.84rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .footer-status-pill {
+    margin: 0 auto;
+  }
+
+  .footer-nav-links,
+  .footer-social-links {
+    align-items: center;
+  }
+
+  .footer-nav-link,
+  .footer-social-link {
+    justify-content: center;
+  }
+
+  .footer-nav-link::before {
+    display: none;
+  }
+
+  .footer-nav-link:hover,
+  .footer-social-link:hover {
+    transform: none;
+  }
+
+  .footer-location-tag {
+    text-align: center;
   }
 
   .footer-bottom-bar {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     text-align: center;
     gap: 1rem;
   }
@@ -4652,7 +4750,7 @@ html.lenis body {
 }
 
 .lenis.lenis-stopped {
-  overflow: hidden;
+  overflow: clip;
 }
 
 .lenis.lenis-scrolling iframe {
