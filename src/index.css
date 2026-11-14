@@ -978,6 +978,11 @@ section {
   box-shadow: 0 0 16px rgba(240, 91, 18, 0.85);
 }
 
+.timeline-item:nth-child(4) .timeline-dot {
+  background-color: #ff8a4b;
+  box-shadow: 0 0 16px rgba(255, 138, 75, 0.85);
+}
+
 .timeline-badges {
   display: flex;
   gap: 0.65rem;
@@ -1005,6 +1010,12 @@ section {
   background: rgba(255, 118, 40, 0.12);
   color: #ff8a4b;
   border: 1px solid rgba(255, 118, 40, 0.3);
+}
+
+.badge-training {
+  background: rgba(255, 118, 40, 0.14);
+  color: #ff8a4b;
+  border: 1px solid rgba(255, 118, 40, 0.35);
 }
 
 .badge-cert {
@@ -4776,44 +4787,12 @@ html.lenis body {
 }
 
 /* ==========================================================================
-   CUSTOM INTERACTIVE CURSOR
+   CUSTOM INTERACTIVE CURSOR (DISABLED)
    ========================================================================== */
 
-.custom-cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #ff7628;
-  box-shadow: 0 0 10px rgba(255, 118, 40, 0.9);
-  pointer-events: none;
-  z-index: 10000001;
-  transform: translate(-50%, -50%);
-  will-change: transform;
-}
-
+.custom-cursor-dot,
 .custom-cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 118, 40, 0.45);
-  pointer-events: none;
-  z-index: 10000000;
-  transform: translate(-50%, -50%);
-  will-change: transform, width, height, border-color, background-color;
-  transition: opacity 0.2s ease;
-}
-
-@media (max-width: 900px), (pointer: coarse) {
-  .custom-cursor-dot,
-  .custom-cursor-ring {
-    display: none !important;
-  }
+  display: none !important;
 }
 
 /* ==========================================================================

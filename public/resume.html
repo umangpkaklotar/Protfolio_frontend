@@ -3,23 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Umang P. Kaklotar — Computer Vision & AI Engineer Resume</title>
+  <title>Umang P. Kaklotar — AI/ML Engineer Resume</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #090d16;
-      --card-bg: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --text-sub: #64748b;
-      --accent: #c2410c;
-      --accent-glow: #ea580c;
-      --accent-light: #fff7ed;
-      --border: #e2e8f0;
+      --navy: #1a365d;
+      --navy-dark: #0f2b5c;
+      --text-dark: #111827;
+      --text-body: #374151;
+      --text-muted: #4b5563;
       --link: #0284c7;
+      --border-line: #1a365d;
     }
 
     * {
@@ -29,33 +26,33 @@
     }
 
     body {
-      background-color: var(--bg);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: var(--text-main);
+      background-color: #0b0f19;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text-dark);
       padding: 24px 16px 60px;
-      line-height: 1.5;
+      line-height: 1.4;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Top Action Bar */
+    /* Top Action Bar for Desktop Browser */
     .action-bar {
-      max-width: 900px;
-      margin: 0 auto 20px;
+      max-width: 820px;
+      margin: 0 auto 16px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 14px 20px;
+      padding: 12px 20px;
       background: #111827;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      border-radius: 10px;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
     }
 
     .action-title {
       color: #f8fafc;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 600;
       display: flex;
       align-items: center;
@@ -64,7 +61,6 @@
 
     .action-badge {
       display: inline-block;
-      font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
       color: #ff8a4b;
       background: rgba(255, 118, 40, 0.12);
@@ -73,6 +69,7 @@
       border-radius: 6px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      font-weight: 600;
     }
 
     .action-buttons {
@@ -85,9 +82,9 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 0.82rem;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 0.8rem;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.2s ease;
@@ -96,13 +93,11 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #ff7628 0%, #ea580c 100%);
+      background: #1e40af;
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
     }
     .btn-primary:hover {
-      background: linear-gradient(135deg, #ff8a4b 0%, #c2410c 100%);
-      transform: translateY(-1px);
+      background: #1d4ed8;
     }
 
     .btn-secondary {
@@ -115,248 +110,178 @@
       color: #ffffff;
     }
 
-    .canva-tip {
-      max-width: 900px;
-      margin: 0 auto 20px;
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px dashed rgba(255, 138, 75, 0.4);
-      border-radius: 10px;
-      padding: 12px 18px;
-      color: #cbd5e1;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .canva-tip strong {
-      color: #ff9d66;
-    }
-
-    /* Resume Document Wrapper */
+    /* Resume Document Wrapper (White A4 Sheet) */
     .resume-sheet {
-      max-width: 900px;
+      max-width: 820px;
       margin: 0 auto;
-      background: var(--card-bg);
-      color: var(--text-main);
-      padding: 48px 54px;
-      border-radius: 8px;
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+      background: #ffffff;
+      color: var(--text-dark);
+      padding: 36px 42px;
+      border-radius: 4px;
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.6);
     }
 
     /* Header */
     .cv-header {
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 16px;
-      margin-bottom: 20px;
+      text-align: center;
+      margin-bottom: 12px;
     }
 
     .cv-name {
-      font-size: 2rem;
+      font-size: 1.65rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #0f172a;
+      letter-spacing: 0.03em;
+      color: var(--navy);
+      text-transform: uppercase;
+      margin-bottom: 3px;
       line-height: 1.15;
     }
 
     .cv-title {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-top: 6px;
+      color: var(--text-dark);
+      margin-bottom: 5px;
     }
 
     .cv-contacts {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px 18px;
-      margin-top: 12px;
-      font-size: 0.86rem;
+      font-size: 0.81rem;
       color: var(--text-muted);
+      line-height: 1.5;
     }
 
     .cv-contacts a {
       color: var(--link);
       text-decoration: none;
-      font-weight: 500;
     }
     .cv-contacts a:hover {
       text-decoration: underline;
     }
 
     .contact-sep {
-      color: #cbd5e1;
+      color: #9ca3af;
+      margin: 0 6px;
     }
 
-    /* Section Styling */
+    /* Section Headings */
     .cv-section {
-      margin-bottom: 22px;
+      margin-top: 10px;
+      margin-bottom: 8px;
     }
 
-    .section-heading {
-      font-size: 0.95rem;
+    .section-title {
+      font-size: 0.86rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #0f172a;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-
-    .section-heading::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: #e2e8f0;
-    }
-
-    .section-heading-accent {
-      display: inline-block;
-      width: 18px;
-      height: 3px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
-    /* Professional Summary */
-    .cv-summary {
-      font-size: 0.9rem;
-      color: #334155;
-      line-height: 1.6;
-      text-align: justify;
-    }
-
-    /* Skills Grid */
-    .skills-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-
-    .skills-table tr {
-      border-bottom: 1px solid #f1f5f9;
-    }
-    .skills-table tr:last-child {
-      border-bottom: none;
-    }
-
-    .skill-cat {
-      width: 28%;
-      padding: 6px 0;
-      font-weight: 700;
-      color: #0f172a;
-      vertical-align: top;
-    }
-
-    .skill-items {
-      width: 72%;
-      padding: 6px 0;
-      color: #334155;
-      vertical-align: top;
-      line-height: 1.5;
-    }
-
-    /* Project Cards */
-    .project-item {
-      margin-bottom: 16px;
-    }
-
-    .project-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 2px;
-    }
-
-    .project-title {
-      font-size: 0.96rem;
-      font-weight: 700;
-      color: #0f172a;
-    }
-
-    .project-tag {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--accent);
-      text-transform: uppercase;
       letter-spacing: 0.05em;
-    }
-
-    .project-meta {
-      font-size: 0.82rem;
-      color: #64748b;
+      color: var(--navy);
+      padding-bottom: 2px;
+      border-bottom: 1.5px solid var(--border-line);
       margin-bottom: 6px;
     }
 
-    .project-meta a {
+    /* Summary */
+    .cv-summary {
+      font-size: 0.82rem;
+      color: var(--text-body);
+      line-height: 1.42;
+      text-align: justify;
+    }
+
+    /* Skills Table */
+    .skills-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.81rem;
+    }
+
+    .skills-table tr {
+      vertical-align: top;
+    }
+
+    .skill-cat {
+      width: 25%;
+      font-weight: 700;
+      color: var(--navy);
+      padding: 1.8px 0;
+      white-space: nowrap;
+    }
+
+    .skill-items {
+      width: 75%;
+      color: var(--text-body);
+      padding: 1.8px 0 1.8px 10px;
+      line-height: 1.38;
+    }
+
+    /* Projects & Jobs */
+    .item-block {
+      margin-bottom: 7px;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.84rem;
+    }
+
+    .item-title {
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .item-date {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .item-link {
+      font-size: 0.78rem;
+      color: var(--link);
+      margin-bottom: 2px;
+    }
+    .item-link a {
       color: var(--link);
       text-decoration: none;
-      font-weight: 500;
     }
-    .project-meta a:hover {
+    .item-link a:hover {
       text-decoration: underline;
     }
 
     .bullet-list {
-      list-style: none;
+      list-style: disc;
+      margin-left: 17px;
       padding-left: 0;
     }
 
     .bullet-list li {
-      position: relative;
-      padding-left: 16px;
-      font-size: 0.88rem;
-      color: #334155;
-      margin-bottom: 5px;
-      line-height: 1.5;
+      font-size: 0.80rem;
+      color: var(--text-body);
+      line-height: 1.38;
+      margin-bottom: 2.5px;
     }
 
-    .bullet-list li::before {
-      content: "•";
-      position: absolute;
-      left: 2px;
-      top: -1px;
-      color: var(--accent);
-      font-size: 1.1rem;
-      font-weight: bold;
+    .bullet-list li::marker {
+      color: var(--navy);
+      font-size: 0.75rem;
     }
 
-    .bullet-list strong {
-      color: #0f172a;
-      font-weight: 600;
+    /* Education specifics */
+    .edu-coursework {
+      font-size: 0.79rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+      margin-top: 1.5px;
     }
 
-    /* Experience & Education */
-    .job-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 2px;
-    }
-
-    .job-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #0f172a;
-    }
-
-    .job-date {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #64748b;
-    }
-
-    .job-company {
-      font-size: 0.84rem;
-      font-weight: 600;
-      font-style: italic;
-      color: var(--accent);
-      margin-bottom: 6px;
+    .edu-desc {
+      font-size: 0.79rem;
+      color: var(--text-body);
+      line-height: 1.35;
+      margin-top: 1.5px;
     }
 
     /* Print Styles */
@@ -365,12 +290,12 @@
         background: #ffffff !important;
         padding: 0 !important;
       }
-      .action-bar, .canva-tip {
+      .action-bar {
         display: none !important;
       }
       .resume-sheet {
         box-shadow: none !important;
-        padding: 20mm 16mm !important;
+        padding: 10mm 12mm !important;
         max-width: 100% !important;
         border-radius: 0 !important;
       }
@@ -378,7 +303,7 @@
         text-decoration: none !important;
         color: inherit !important;
       }
-      .cv-contacts a, .project-meta a {
+      .cv-contacts a, .item-link a {
         color: #0284c7 !important;
       }
     }
@@ -390,188 +315,191 @@
   <div class="action-bar">
     <div class="action-title">
       <span>Umang P. Kaklotar</span>
-      <span class="action-badge">Computer Vision Engineer CV</span>
+      <span class="action-badge">AI/ML Engineer CV</span>
     </div>
     <div class="action-buttons">
-      <a href="/resume.pdf" download="Umang_Kaklotar_Computer_Vision_Resume.pdf" class="btn btn-primary">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download PDF (Full 2-Page)
-      </a>
-      <a href="/resume-1page.pdf" download="Umang_Kaklotar_Computer_Vision_Resume_1Page.pdf" class="btn btn-secondary">
-        Download PDF (1-Page ATS)
+      <a href="/resume.pdf" download="Umang_Kaklotar_AI_ML_Resume.pdf" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
       </a>
       <button onclick="window.print()" class="btn btn-secondary">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
         Print
       </button>
       <a href="/" class="btn btn-secondary">Return to Portfolio</a>
     </div>
   </div>
 
-  <!-- Canva Import Instruction Tip -->
-  <div class="canva-tip">
-    <div>
-      <strong>How to edit in Canva:</strong> Download the PDF above, open <a href="https://www.canva.com" target="_blank" style="color: #ff9d66; text-decoration: underline;">Canva.com</a>, click <strong>Upload &gt; Choose files</strong> and select this PDF. Canva will automatically convert all text, sections, and lines into fully editable design layers!
-    </div>
-  </div>
-
-  <!-- Main Resume Content (No Photo, Clean ATS Layout) -->
+  <!-- Main Resume Content (Matching Reference Layout) -->
   <main class="resume-sheet">
+    
     <!-- Header -->
     <header class="cv-header">
       <h1 class="cv-name">UMANG P. KAKLOTAR</h1>
-      <div class="cv-title">Computer Vision Engineer | AI &amp; Deep Learning Developer</div>
+      <div class="cv-title">AI/ML Engineer</div>
       <div class="cv-contacts">
-        <span>Surat, Gujarat, India</span>
-        <span class="contact-sep">|</span>
-        <a href="mailto:upkaklotar7@gmail.com">upkaklotar7@gmail.com</a>
-        <span class="contact-sep">|</span>
-        <a href="https://www.linkedin.com/in/umang-kaklotar-802099303/" target="_blank" rel="noreferrer">linkedin.com/in/umang-kaklotar-802099303</a>
-        <span class="contact-sep">|</span>
-        <a href="https://github.com/umangpkaklotar?tab=repositories" target="_blank" rel="noreferrer">github.com/umangpkaklotar</a>
+        <div>
+          <span>Surat, India</span>
+          <span class="contact-sep">|</span>
+          <a href="mailto:upkaklotar7@gmail.com">upkaklotar7@gmail.com</a>
+        </div>
+        <div>
+          <span>Portfolio: <a href="https://protfolio-frontend.upkaklotar7.workers.dev" target="_blank" rel="noreferrer">https://protfolio-frontend.upkaklotar7.workers.dev</a></span>
+          <span class="contact-sep">|</span>
+          <span>GitHub: <a href="https://github.com/umangpkaklotar" target="_blank" rel="noreferrer">https://github.com/umangpkaklotar</a></span>
+        </div>
+        <div>
+          <span>LinkedIn: <a href="https://www.linkedin.com/in/umang-kaklotar-802099303/" target="_blank" rel="noreferrer">https://www.linkedin.com/in/umang-kaklotar-802099303</a></span>
+        </div>
       </div>
     </header>
 
-    <!-- Professional Summary -->
+    <!-- PROFESSIONAL SUMMARY -->
     <section class="cv-section">
-      <h2 class="section-heading">
-        <span class="section-heading-accent"></span>
-        Professional Summary
-      </h2>
+      <h2 class="section-title">PROFESSIONAL SUMMARY</h2>
       <p class="cv-summary">
-        Computer Vision and Deep Learning Developer specializing in Automated Optical Inspection (AOI), real-time object detection, and industrial digital twin simulations. Hands-on experience developing and deploying custom Ultralytics YOLOv8 architectures across web image inputs, shop-floor mobile camera streams, and ROS 2 / Gazebo conveyor automation pipelines. Proficient in OpenCV, PyTorch, Python, FastAPI microservices, and multimodal AI platforms. Proven ability to architect end-to-end computer vision systems from dataset curation and model training to hardware-synchronized inference and operator dashboard analytics.
+        Entry-level AI/ML Engineer with practical software development experience and hands-on expertise building AI-powered applications using Python, Machine Learning, Computer Vision, and Generative AI. Experienced in developing custom YOLOv8 object detection pipelines, real-time optical inspection (AOI), ROS 2 and Gazebo robotics simulations, and Retrieval-Augmented Generation (RAG) platforms using Gemini embeddings, FAISS vector search, and Groq LPU inference. Solid engineering foundation with experience in application development, REST API integration, and cloud deployment. Currently attending AI/ML classes at DataMites in Bangalore.
       </p>
     </section>
 
-    <!-- Technical Skills -->
+    <!-- TECHNICAL SKILLS -->
     <section class="cv-section">
-      <h2 class="section-heading">
-        <span class="section-heading-accent"></span>
-        Technical Skills &amp; Core Competencies
-      </h2>
+      <h2 class="section-title">TECHNICAL SKILLS</h2>
       <table class="skills-table">
-        <tr>
-          <td class="skill-cat">Computer Vision &amp; DL:</td>
-          <td class="skill-items">Ultralytics YOLOv8, YOLO, OpenCV, PyTorch, Torchvision, Scikit-Image, Object Detection, Bounding Box Annotation, Quality Classification, Defect Localization, Transfer Learning, Model Calibration.</td>
-        </tr>
-        <tr>
-          <td class="skill-cat">Robotics &amp; Simulation:</td>
-          <td class="skill-items">ROS 2 (Jazzy Jalisco), Gazebo Sim 8, Sensor Cameras, Industrial Conveyor Automation, CvBridge, Virtual Sensor Integration, Shop-floor Telemetry.</td>
-        </tr>
-        <tr>
-          <td class="skill-cat">AI, Vector DB &amp; LLMs:</td>
-          <td class="skill-items">Google Gemini Embedding API (gemini-embedding-2), FAISS Vector DB (IndexFlatIP), Groq LPU (Ultra-Low Latency Inference), LangChain, Multi-tenant RAG, Semantic Chunking.</td>
-        </tr>
-        <tr>
-          <td class="skill-cat">Backend &amp; Languages:</td>
-          <td class="skill-items">Python (FastAPI, NumPy, Pandas, Scikit-Learn, Uvicorn), JavaScript (ES6+), React 18, Vite, Node.js, HTML5, CSS3, REST APIs, Server-Sent Events (SSE).</td>
-        </tr>
-        <tr>
-          <td class="skill-cat">Databases &amp; Tools:</td>
-          <td class="skill-items">MongoDB, MySQL, Git, GitHub, Postman, Linux / Bash, VS Code, Clerk Auth.</td>
-        </tr>
+        <tbody>
+          <tr>
+            <td class="skill-cat">Programming Languages</td>
+            <td class="skill-items">Python, JavaScript (ES6+), PHP, HTML5, CSS3, SQL</td>
+          </tr>
+          <tr>
+            <td class="skill-cat">Machine Learning</td>
+            <td class="skill-items">scikit-learn, Pandas, NumPy, Feature Engineering, Model Training, EDA, Regression</td>
+          </tr>
+          <tr>
+            <td class="skill-cat">Deep Learning &amp; CV</td>
+            <td class="skill-items">Ultralytics YOLOv8, PyTorch, Torchvision, OpenCV (cv2), Scikit-Image, Object Detection</td>
+          </tr>
+          <tr>
+            <td class="skill-cat">Generative AI &amp; LLMs</td>
+            <td class="skill-items">RAG, LLM Integration, Google Gemini, Groq LPU, LangChain, Prompt Engineering, Citation Grounding</td>
+          </tr>
+          <tr>
+            <td class="skill-cat">Vector Search &amp; Retrieval</td>
+            <td class="skill-items">FAISS (IndexFlatIP), Vector Embeddings (Gemini Embedding-2), Semantic Search, Document Chunking</td>
+          </tr>
+          <tr>
+            <td class="skill-cat">Robotics &amp; Simulation</td>
+            <td class="skill-items">ROS 2 (Jazzy), Gazebo Sim 8, RViz2, Conveyor Automation, CvBridge, Telemetry</td>
+          </tr>
+          <tr>
+            <td class="skill-cat">Backend &amp; Deployment</td>
+            <td class="skill-items">FastAPI, Uvicorn, REST APIs, WebSockets, Server-Sent Events (SSE), Docker, Git, GitHub</td>
+          </tr>
+          <tr>
+            <td class="skill-cat">Web Technologies</td>
+            <td class="skill-items">React.js, Tailwind CSS, Bootstrap, JavaScript, Authentication (Clerk), Role-Based Access Control</td>
+          </tr>
+          <tr>
+            <td class="skill-cat">Databases</td>
+            <td class="skill-items">MongoDB, MySQL</td>
+          </tr>
+        </tbody>
       </table>
     </section>
 
-    <!-- Key Projects -->
+    <!-- PROJECTS -->
     <section class="cv-section">
-      <h2 class="section-heading">
-        <span class="section-heading-accent"></span>
-        Featured Computer Vision &amp; AI Projects
-      </h2>
+      <h2 class="section-title">PROJECTS</h2>
 
-      <!-- PCB AI Inspection -->
-      <article class="project-item">
-        <div class="project-header-row">
-          <h3 class="project-title">PCB AI Defect Inspection &amp; Smart Manufacturing System</h3>
-          <span class="project-tag">Flagship Industrial AI Project</span>
+      <!-- PCB Project -->
+      <article class="item-block">
+        <div class="item-header">
+          <span class="item-title">PCB Defect Detection: AI-Powered Industrial Inspection Platform</span>
+          <span class="item-date">| Jan 2025 – Present</span>
         </div>
-        <div class="project-meta">
-          <span>Tech: Ultralytics YOLOv8 (best.pt), OpenCV, ROS 2 Jazzy, Gazebo Sim 8, FastAPI, MongoDB, React</span>
-          <span>&bull;</span>
-          <span>Live Demo: <a href="https://pcb-frontend.getvoroa.com/" target="_blank" rel="noreferrer">pcb-frontend.getvoroa.com</a></span>
+        <div class="item-link">
+          Live Demo: <a href="https://pcb-frontend.getvoroa.com/" target="_blank" rel="noreferrer">https://pcb-frontend.getvoroa.com/</a>
         </div>
         <ul class="bullet-list">
-          <li><strong>Trained Custom YOLOv8 Model:</strong> Trained and evaluated custom YOLOv8 object detection model (best.pt) on multi-class PCB defect datasets to accurately identify 7 critical defect categories: Copper, Mousebite, Open, Pin-hole, Short, Spur, and Missing Hole with high confidence (&gt;77% &ndash; 92%).</li>
-          <li><strong>Multi-Surface Real-Time Pipeline:</strong> Engineered dual-surface inspection pipeline processing high-res uploads and shop-floor mobile/desktop camera streams, generating real-time bounding boxes, defect count statistics, and automated Pass / Rework / Scrap decisions.</li>
-          <li><strong>ROS 2 &amp; Gazebo Digital Twin:</strong> Built a virtual smart manufacturing inspection cell in Gazebo Sim 8 with ROS 2 conveyor automation; integrated virtual proximity sensors and virtual camera streams processed frame-by-frame via CvBridge into YOLOv8 for automated zero-contact inline defect detection.</li>
-          <li><strong>Industrial Backend &amp; Traceability:</strong> Built high-performance asynchronous FastAPI REST endpoints with MongoDB for recording unique PCB IDs, defect coordinates, camera telemetry, and machine status for historical quality auditing.</li>
+          <li>Engineered an industrial AI inspection pipeline using custom-trained Ultralytics YOLOv8 (best.pt) detecting 7 defect classes (Copper, Mousebite, Open, Pin-hole, Short, Spur, Missing Hole) with high confidence.</li>
+          <li>Developed real-time inspection supporting desktop uploads and shop-floor mobile camera streams with automated Pass / Rework / Scrap industrial quality decisions.</li>
+          <li>Built virtual smart manufacturing digital twin in Gazebo Sim 8 with ROS 2 conveyor automation; integrated virtual proximity sensors and virtual camera feeds via CvBridge for automated zero-contact defect detection.</li>
+          <li>Developed asynchronous FastAPI backend with MongoDB recording PCB IDs, defect coordinates, and machine status for historical quality auditing.</li>
         </ul>
       </article>
 
-      <!-- Document AI -->
-      <article class="project-item">
-        <div class="project-header-row">
-          <h3 class="project-title">Document AI — Enterprise Multi-Format RAG Platform</h3>
-          <span class="project-tag">Enterprise Multimodal AI</span>
+      <!-- Document AI Project -->
+      <article class="item-block">
+        <div class="item-header">
+          <span class="item-title">Document AI: Enterprise Multi-Format RAG Platform</span>
+          <span class="item-date">| Jan 2025 – Present</span>
         </div>
-        <div class="project-meta">
-          <span>Tech: Google Gemini Embedding-2, FAISS, Groq LPU, LangChain, FastAPI, Clerk Auth, React</span>
-          <span>&bull;</span>
-          <span>Live Demo: <a href="https://rag-frontend-omega-three.vercel.app/" target="_blank" rel="noreferrer">rag-frontend-omega-three.vercel.app</a></span>
+        <div class="item-link">
+          Live Demo: <a href="https://rag-frontend-omega-three.vercel.app/" target="_blank" rel="noreferrer">https://rag-frontend-omega-three.vercel.app/</a>
         </div>
         <ul class="bullet-list">
-          <li><strong>Multi-Format Semantic Vector Ingestion:</strong> Engineered document parsing pipeline for PDF, Word DOCX, CSV, TXT, and Markdown using overlap-aware recursive chunking (900 chars, 150 overlap); generated L2-normalized vectors via Gemini Embedding-2 for sub-millisecond similarity search using in-memory FAISS IndexFlatIP.</li>
-          <li><strong>Ultra-Low Latency Inference &amp; Citations:</strong> Leveraged Groq LPU inference for real-time response token streaming via Server-Sent Events (SSE) with prompt guardrails to guarantee factual responses and verified citation bubbles showing source filenames and page numbers.</li>
-          <li><strong>Multi-Tenant Architecture:</strong> Implemented Clerk JWT authentication, maintaining per-user isolated vector spaces and encrypted MongoDB session chat history.</li>
+          <li>Engineered a Retrieval-Augmented Generation (RAG) platform supporting multi-format ingestion for PDF, DOCX, CSV, TXT, and Markdown documents with semantic overlap chunking.</li>
+          <li>Generated batch vector embeddings using Google Gemini Embedding-2, indexed into in-memory FAISS IndexFlatIP for sub-millisecond similarity retrieval.</li>
+          <li>Integrated Groq LPU inference delivering real-time streaming answers via Server-Sent Events (SSE) with verified source citation bubbles and anti-hallucination prompt guardrails.</li>
+          <li>Implemented multi-tenant user isolation with Clerk JWT authentication and encrypted MongoDB conversation history.</li>
         </ul>
       </article>
 
       <!-- Home Price Prediction -->
-      <article class="project-item">
-        <div class="project-header-row">
-          <h3 class="project-title">Real Estate Valuation &amp; Home Price Prediction System</h3>
-          <span class="project-tag">Applied Machine Learning</span>
-        </div>
-        <div class="project-meta">
-          <span>Tech: Python, Scikit-Learn, Pandas, NumPy, Matplotlib, Data Preprocessing</span>
+      <article class="item-block">
+        <div class="item-header">
+          <span class="item-title">Real Estate Valuation: Home Price Prediction System</span>
+          <span class="item-date">| 2025</span>
         </div>
         <ul class="bullet-list">
-          <li><strong>Data Cleansing &amp; Feature Engineering:</strong> Conducted Exploratory Data Analysis (EDA) on multi-variable housing datasets; applied automated outlier filtering, dimensional transformation, and categorical feature encoding.</li>
-          <li><strong>Predictive Regression Modeling:</strong> Trained linear and ensemble regression models; performed hyperparameter tuning and cross-validation to maximize accuracy and minimize Root Mean Squared Error (RMSE).</li>
+          <li>Conducted comprehensive Exploratory Data Analysis (EDA) on multi-feature housing datasets with automated outlier filtering, categorical encoding, and feature scaling.</li>
+          <li>Trained linear and ensemble regression models using Scikit-Learn with cross-validation and hyperparameter tuning, achieving an R&sup2; score of 0.942.</li>
         </ul>
       </article>
     </section>
 
-    <!-- Professional Experience -->
+    <!-- PROFESSIONAL EXPERIENCE -->
     <section class="cv-section">
-      <h2 class="section-heading">
-        <span class="section-heading-accent"></span>
-        Professional Experience
-      </h2>
-      <div class="job-item">
-        <div class="job-header-row">
-          <h3 class="job-title">Frontend Developer Intern</h3>
-          <span class="job-date">6 Months | 2025</span>
+      <h2 class="section-title">PROFESSIONAL EXPERIENCE</h2>
+      <article class="item-block">
+        <div class="item-header">
+          <span class="item-title">Frontend Developer Intern, Jemistry Info Solutions LLP, Surat, India</span>
+          <span class="item-date">| 6 Months (2025)</span>
         </div>
-        <div class="job-company">Jemistry Info Solutions LLP &mdash; Surat, Gujarat, India</div>
         <ul class="bullet-list">
-          <li><strong>Modular Component Architecture:</strong> Developed responsive, accessible web interfaces converting Figma designs into performant, clean frontend components using HTML5, CSS3, JavaScript, React, and Bootstrap.</li>
-          <li><strong>REST API Integration &amp; Performance:</strong> Integrated RESTful APIs using Axios and Fetch API; implemented error boundaries, payload validation, and client-side caching to reduce redundant network round trips.</li>
-          <li><strong>Version Control &amp; Team Workflows:</strong> Collaborated with agile engineering team using Git and GitHub for pull requests, code reviews, and resolving cross-browser rendering disparities.</li>
+          <li>Developed responsive, accessible web interfaces converting Figma UI/UX designs into production-ready React and Bootstrap components.</li>
+          <li>Integrated RESTful APIs using Axios and Fetch API; implemented client-side state, error handling, and payload validation.</li>
+          <li>Optimized frontend rendering performance, cross-browser compatibility, and modular styling across desktop and mobile devices.</li>
+          <li>Collaborated in an agile team workflow using Git and GitHub for pull requests, code reviews, and structured version control.</li>
         </ul>
-      </div>
+      </article>
     </section>
 
-    <!-- Education -->
+    <!-- EDUCATION -->
     <section class="cv-section">
-      <h2 class="section-heading">
-        <span class="section-heading-accent"></span>
-        Education
-      </h2>
-      <div class="job-item">
-        <div class="job-header-row">
-          <h3 class="job-title">Bachelor of Computer Applications (BCA)</h3>
-          <span class="job-date">Graduating: 2025</span>
+      <h2 class="section-title">EDUCATION</h2>
+      <article class="item-block">
+        <div class="item-header">
+          <span class="item-title">Bachelor of Computer Applications (BCA), Smt ZS Patel College, Surat</span>
+          <span class="item-date">| Jun 2022 – 2025</span>
         </div>
-        <div class="job-company" style="color: #475569;">Smt ZS Patel College of Management and Technology &mdash; Surat, Gujarat, India</div>
-        <ul class="bullet-list">
-          <li><strong>Relevant Coursework:</strong> Computer Vision Fundamentals, Machine Learning, Data Structures &amp; Algorithms (DSA), Object-Oriented Programming (OOP), Database Management Systems (DBMS), Web Technologies, Operating Systems.</li>
-        </ul>
-      </div>
+        <div class="edu-coursework">
+          Relevant Coursework: Computer Vision, Machine Learning, DSA, OOP, DBMS, Web Technologies, Operating Systems
+        </div>
+      </article>
+
+      <article class="item-block" style="margin-top: 6px;">
+        <div class="item-header">
+          <span class="item-title">AI/ML Classes — DataMites, Bangalore, India</span>
+          <span class="item-date">| Present</span>
+        </div>
+        <div class="edu-desc">
+          Currently attending AI/ML training focusing on building practical knowledge and skills in Artificial Intelligence and Machine Learning.
+        </div>
+      </article>
     </section>
+
   </main>
 
 </body>
 </html>
-

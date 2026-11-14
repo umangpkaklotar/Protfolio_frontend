@@ -1,14 +1,14 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { experience, education } from '../data/portfolioData';
+import { experience, education, training } from '../data/portfolioData';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Experience = () => {
   const comp = useRef();
 
-  // Combine experience and education into a single timeline array
+  // Combine experience, education, and training into a single timeline array
   const timelineData = [
     ...experience.map((exp, index) => ({
       id: `exp-${exp.id}`,
@@ -27,6 +27,15 @@ const Experience = () => {
       title: `${edu.qualification} — ${edu.institution}`,
       subtitle: '',
       description: '',
+    })),
+    ...(training || []).map((trn) => ({
+      id: `trn-${trn.id}`,
+      date: trn.year,
+      badge: trn.category,
+      badgeClass: 'badge-training',
+      title: trn.title,
+      subtitle: trn.location,
+      description: trn.description,
     })),
     {
       id: 'goal-1',

@@ -12,7 +12,6 @@ import Projects from './components/Projects';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import CustomCursor from './components/CustomCursor';
 import Chatbot from './components/Chatbot';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -136,9 +135,6 @@ function App() {
     <>
       {/* Top Global Scroll Progress HUD Bar */}
       <div ref={progressBarRef} className="global-scroll-progress" aria-hidden="true" />
-
-      {/* Interactive Custom Follower Cursor */}
-      <CustomCursor />
 
       {/* Background Atmosphere Layers */}
       <div className="app-background" />

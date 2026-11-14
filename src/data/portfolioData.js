@@ -44,6 +44,17 @@ export const education = [
   }
 ];
 
+export const training = [
+  {
+    id: 1,
+    year: "Present",
+    category: "AI/ML Training",
+    title: "AI/ML Classes — DataMites",
+    location: "Bangalore, India",
+    description: "I am currently attending AI/ML classes at DataMites in Bangalore, focusing on building practical knowledge and skills in Artificial Intelligence and Machine Learning."
+  }
+];
+
 export const PCB_APP_URL =
   (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_PCB_APP_URL)
   || 'https://pcb-frontend.getvoroa.com/';
